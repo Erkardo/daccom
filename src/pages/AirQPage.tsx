@@ -110,7 +110,7 @@ export default function AirQPage() {
             <div className="relative">
               <div className="absolute -inset-4 bg-gradient-to-br from-purple-500/10 to-brand-teal/5 rounded-[3rem] blur-2xl" />
               <div className="glass rounded-[3rem] overflow-hidden border-brand-accent/10 relative">
-                <img src="/airq-dashboard.jpg" alt="AirQ Dashboard" className="w-full object-cover" />
+                <img src="/techno-arm-hero.jpg" alt="AirQ Dashboard" className="w-full object-cover" />
                 <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-brand-bg to-transparent p-8">
                   <div className="flex items-center justify-between">
                     <div>
