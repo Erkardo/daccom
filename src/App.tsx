@@ -128,6 +128,10 @@ export default function App() {
             <a href="#projects" className="font-mono text-[10px] text-brand-chalk hover:text-brand-teal transition-colors tracking-[0.2em]">{t('nav.projects')}</a>
             <a href="#products" className="font-mono text-[10px] text-brand-chalk hover:text-brand-teal transition-colors tracking-[0.2em]">{t('nav.products')}</a>
             <a href="#about" className="font-mono text-[10px] text-brand-chalk hover:text-brand-teal transition-colors tracking-[0.2em]">{t('nav.about')}</a>
+            <a href="#tools" className="font-mono text-[10px] tracking-[0.2em] relative group">
+              <span className="text-brand-teal group-hover:text-white transition-colors">{t('nav.tools')}</span>
+              <span className="absolute -top-1 -right-2 w-1.5 h-1.5 bg-brand-teal rounded-full animate-pulse" />
+            </a>
           </div>
         </div>
         <div className="flex items-center gap-6">
