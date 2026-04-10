@@ -7,6 +7,7 @@ import { motion, useScroll, useSpring, useMotionValue, useTransform, AnimatePres
 import { Landmark, Settings, Brain, Zap, Globe, ArrowUpRight, ChevronRight, Play, Cpu, Shield, BarChart3, Rocket, Users, MessageSquare, Mail, Phone, MapPin, CheckCircle2, Trophy, Plane, Building2, Key, Wind, Activity, HardHat, BedDouble, Facebook, Twitter, Linkedin, Instagram, Languages } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 import SmartTools from "./components/SmartTools";
 
 export default function App() {
@@ -460,31 +461,49 @@ export default function App() {
       {/* Product Showcase */}
       <section id="products" className="py-32 px-6 md:px-12 lg:px-24">
         <div className="max-w-7xl mx-auto">
-          <ProductSection 
-            number="01"
-            tag={t('products.techno_arm.tag')}
-            title={t('products.techno_arm.title')}
-            desc={t('products.techno_arm.desc')}
-            metrics={[
-              { label: t('products.techno_arm.metric1'), val: t('products.techno_arm.metric1_val') },
-              { label: t('products.techno_arm.metric2'), val: t('products.techno_arm.metric2_val') },
-              { label: t('products.techno_arm.metric3'), val: t('products.techno_arm.metric3_val') }
-            ]}
-            visual={<RobotVisual />}
-          />
-          <ProductSection 
-            number="02"
-            tag={t('products.airq.tag')}
-            title={t('products.airq.title')}
-            desc={t('products.airq.desc')}
-            metrics={[
-              { label: t('products.airq.metric1'), val: t('products.airq.metric1_val') },
-              { label: t('products.airq.metric2'), val: t('products.airq.metric2_val') },
-              { label: t('products.airq.metric3'), val: t('products.airq.metric3_val') }
-            ]}
-            visual={<AirQVisual />}
-            reverse
-          />
+          <Link to="/techno-arm" className="block group">
+            <ProductSection 
+              number="01"
+              tag={t('products.techno_arm.tag')}
+              title={t('products.techno_arm.title')}
+              desc={t('products.techno_arm.desc')}
+              metrics={[
+                { label: t('products.techno_arm.metric1'), val: t('products.techno_arm.metric1_val') },
+                { label: t('products.techno_arm.metric2'), val: t('products.techno_arm.metric2_val') },
+                { label: t('products.techno_arm.metric3'), val: t('products.techno_arm.metric3_val') }
+              ]}
+              visual={<RobotVisual />}
+            />
+          </Link>
+          <Link to="/airq" className="block group">
+            <ProductSection 
+              number="02"
+              tag={t('products.airq.tag')}
+              title={t('products.airq.title')}
+              desc={t('products.airq.desc')}
+              metrics={[
+                { label: t('products.airq.metric1'), val: t('products.airq.metric1_val') },
+                { label: t('products.airq.metric2'), val: t('products.airq.metric2_val') },
+                { label: t('products.airq.metric3'), val: t('products.airq.metric3_val') }
+              ]}
+              visual={<AirQVisual />}
+              reverse
+            />
+          </Link>
+          <Link to="/mining-ai" className="block group">
+            <ProductSection 
+              number="03"
+              tag="Predictive AI"
+              title={i18n.language === 'mn' ? 'Mining AI' : 'Mining AI'}
+              desc={t('projects.mining.desc')}
+              metrics={[
+                { label: i18n.language === 'mn' ? 'Зардал бууруулах' : 'Cost Reduction', val: '30-50%' },
+                { label: i18n.language === 'mn' ? 'Зогсолт бууруулах' : 'Downtime Reduction', val: '80%' },
+                { label: i18n.language === 'mn' ? 'Дугуйн наслалт' : 'Tire Lifespan', val: '2x' }
+              ]}
+              visual={<MiningVisual />}
+            />
+          </Link>
         </div>
       </section>
 
@@ -901,6 +920,26 @@ function AirQVisual() {
           className="w-4 bg-brand-accent/40 rounded-full"
         />
       ))}
+    </div>
+  );
+}
+
+function MiningVisual() {
+  return (
+    <div className="relative w-48 h-48 flex items-center justify-center">
+      <motion.div 
+        animate={{ rotate: -360 }}
+        transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+        className="absolute inset-0 border-2 border-orange-400/20 rounded-full border-dashed"
+      />
+      <div className="w-24 h-24 bg-orange-400/10 rounded-full flex items-center justify-center">
+        <HardHat size={40} className="text-orange-400" />
+      </div>
+      <motion.div 
+        animate={{ scale: [1, 1.3, 1] }}
+        transition={{ duration: 2, repeat: Infinity }}
+        className="absolute top-4 right-4 w-3 h-3 bg-orange-400 rounded-full shadow-[0_0_10px_rgba(251,146,60,0.5)]"
+      />
     </div>
   );
 }
