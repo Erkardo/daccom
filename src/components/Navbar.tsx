@@ -5,16 +5,27 @@ import { ChevronRight, Settings, Wind, HardHat, Landmark } from "lucide-react";
 
 export function Logo({ className = "" }: { className?: string }) {
   return (
-    <Link to="/" className={`flex items-center gap-3 group ${className}`}>
-      <div className="relative">
-        <div className="w-10 h-10 bg-brand-teal rounded-xl rotate-12 group-hover:rotate-0 transition-transform duration-500 flex items-center justify-center">
-          <Landmark size={20} className="text-brand-bg -rotate-12 group-hover:rotate-0 transition-transform duration-500" />
-        </div>
-        <div className="absolute -inset-1 bg-brand-teal/20 blur opacity-0 group-hover:opacity-100 transition-opacity rounded-xl" />
-      </div>
-      <div>
-        <span className="block font-heading text-xl leading-none tracking-tight">DACCOM</span>
-        <span className="block font-mono text-[8px] text-brand-teal tracking-[0.4em] uppercase">Partners</span>
+    <Link to="/" className={`flex items-center gap-3 ${className}`}>
+      <div className="h-8 md:h-9">
+        <svg className="h-full w-auto" viewBox="198 90 360 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <title>Daccom Partners logo</title>
+          <g opacity="0.55" stroke="#3B82F6" strokeWidth="1">
+            <line x1="223" y1="165" x2="293" y2="165" />
+            <line x1="223" y1="165" x2="258" y2="108" />
+            <line x1="293" y1="165" x2="258" y2="108" />
+            <line x1="223" y1="165" x2="293" y2="108" strokeWidth="0.5" opacity="0.4" />
+          </g>
+          <circle cx="223" cy="165" r="24" fill="#1D4ED8" />
+          <circle cx="223" cy="165" r="5" fill="white" opacity="0.3" />
+          <circle cx="258" cy="108" r="17" stroke="#1D4ED8" strokeWidth="2.5" />
+          <circle cx="258" cy="108" r="4" fill="#1D4ED8" />
+          <circle cx="293" cy="165" r="14" fill="#06B6D4" />
+          <circle cx="293" cy="165" r="4" fill="white" opacity="0.35" />
+          <circle cx="268" cy="139" r="3.5" fill="#06B6D4" opacity="0.85" />
+          <line x1="332" y1="92" x2="332" y2="192" stroke="#334155" strokeWidth="1" />
+          <text x="352" y="158" fill="#EDE9DF" style={{ fontFamily: 'Manrope, sans-serif', fontSize: '41px', fontWeight: 800 }}>DACCOM</text>
+          <text x="354" y="183" fill="#94A8BE" style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '11px', fontWeight: 500 }}>PARTNERS</text>
+        </svg>
       </div>
     </Link>
   );
