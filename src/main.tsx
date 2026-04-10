@@ -6,6 +6,10 @@ import TechnoArmPage from './pages/TechnoArmPage.tsx';
 import AirQPage from './pages/AirQPage.tsx';
 import MiningAIPage from './pages/MiningAIPage.tsx';
 import BrochurePage from './pages/BrochurePage.tsx';
+import CareersPage from './pages/CareersPage.tsx';
+import InsightsPage from './pages/InsightsPage.tsx';
+import LegalPage from './pages/LegalPage.tsx';
+import FAQPage from './pages/FAQPage.tsx';
 import './index.css';
 import './i18n/config';
 
@@ -26,6 +30,10 @@ function AppRouter() {
         <Route path="/airq" element={<AirQPage />} />
         <Route path="/mining-ai" element={<MiningAIPage />} />
         <Route path="/brochure" element={<BrochurePage />} />
+        <Route path="/careers" element={<CareersPage />} />
+        <Route path="/insights" element={<InsightsPage />} />
+        <Route path="/legal" element={<LegalPage />} />
+        <Route path="/faq" element={<FAQPage />} />
       </Routes>
     </BrowserRouter>
   );

@@ -127,6 +127,30 @@ export default function Navbar() {
             </div>
           </div>
 
+          {/* Company Dropdown */}
+          <div className="relative group/company">
+            <button className="font-mono text-[10px] text-brand-chalk hover:text-brand-teal transition-colors tracking-[0.2em] flex items-center gap-1">
+              {i18n.language === 'mn' ? 'КОМПАНИ' : 'COMPANY'}
+              <ChevronRight size={10} className="rotate-90 transition-transform group-hover/company:-rotate-90" />
+            </button>
+            <div className="absolute top-full left-0 pt-4 opacity-0 invisible group-hover/company:opacity-100 group-hover/company:visible transition-all duration-300 z-50">
+               <div className="w-[180px] backdrop-blur-xl bg-brand-bg/95 border border-hairline rounded-2xl p-2 shadow-2xl">
+                 <Link to="/insights" className="flex items-center justify-between px-4 py-3 text-[9px] font-mono tracking-[0.2em] text-brand-chalk hover:text-brand-teal hover:bg-brand-teal/5 rounded-xl transition-all group/item">
+                    {i18n.language === 'mn' ? 'МЭДЭЭ' : 'INSIGHTS'}
+                    <div className="w-1 h-1 bg-brand-teal rounded-full opacity-0 group-hover/item:opacity-100 transition-opacity" />
+                 </Link>
+                 <Link to="/careers" className="flex items-center justify-between px-4 py-3 text-[9px] font-mono tracking-[0.2em] text-brand-chalk hover:text-brand-teal hover:bg-brand-teal/5 rounded-xl transition-all group/item">
+                    {i18n.language === 'mn' ? 'АЖИЛ' : 'CAREERS'}
+                    <div className="w-1 h-1 bg-brand-teal rounded-full opacity-0 group-hover/item:opacity-100 transition-opacity" />
+                 </Link>
+                 <Link to="/faq" className="flex items-center justify-between px-4 py-3 text-[9px] font-mono tracking-[0.2em] text-brand-chalk hover:text-brand-teal hover:bg-brand-teal/5 rounded-xl transition-all group/item">
+                    {i18n.language === 'mn' ? 'FAQ' : 'FAQ'}
+                    <div className="w-1 h-1 bg-brand-teal rounded-full opacity-0 group-hover/item:opacity-100 transition-opacity" />
+                 </Link>
+               </div>
+            </div>
+          </div>
+
           <a href={getHref("#about")} className="font-mono text-[10px] text-brand-chalk hover:text-brand-teal transition-colors tracking-[0.2em]">{t('nav.about')}</a>
           <a href={getHref("#tools")} className="font-mono text-[10px] tracking-[0.2em] relative group">
             <span className="text-brand-teal group-hover:text-white transition-colors">{t('nav.tools')}</span>

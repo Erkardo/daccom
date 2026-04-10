@@ -705,17 +705,18 @@ export default function App() {
             <div>
               <h4 className="font-mono text-[10px] text-white mb-8 tracking-[0.2em]">{t('footer.columns.products')}</h4>
               <ul className="space-y-4">
-                {(t('footer.product_links', { returnObjects: true }) as string[]).map(link => (
-                  <li key={link}><a href="#" className="text-brand-chalk hover:text-brand-teal transition-colors text-sm font-light">{link}</a></li>
-                ))}
+                <li><Link to="/techno-arm" className="text-brand-chalk hover:text-brand-teal transition-colors text-sm font-light">Techno-Arm</Link></li>
+                <li><Link to="/airq" className="text-brand-chalk hover:text-brand-teal transition-colors text-sm font-light">AirQ</Link></li>
+                <li><Link to="/mining-ai" className="text-brand-chalk hover:text-brand-teal transition-colors text-sm font-light">Mining AI</Link></li>
               </ul>
             </div>
             <div>
               <h4 className="font-mono text-[10px] text-white mb-8 tracking-[0.2em]">{t('footer.columns.company')}</h4>
               <ul className="space-y-4">
-                {(t('footer.company_links', { returnObjects: true }) as string[]).map(link => (
-                  <li key={link}><a href="#" className="text-brand-chalk hover:text-brand-teal transition-colors text-sm font-light">{link}</a></li>
-                ))}
+                <li><Link to="/#about" className="text-brand-chalk hover:text-brand-teal transition-colors text-sm font-light">{i18n.language === 'mn' ? 'Бидний тухай' : 'About Us'}</Link></li>
+                <li><Link to="/insights" className="text-brand-chalk hover:text-brand-teal transition-colors text-sm font-light">{i18n.language === 'mn' ? 'Мэдээ' : 'Insights'}</Link></li>
+                <li><Link to="/careers" className="text-brand-chalk hover:text-brand-teal transition-colors text-sm font-light">{i18n.language === 'mn' ? 'Карьер' : 'Careers'}</Link></li>
+                <li><Link to="/faq" className="text-brand-chalk hover:text-brand-teal transition-colors text-sm font-light">{i18n.language === 'mn' ? 'Асуулт хариулт' : 'FAQ'}</Link></li>
               </ul>
             </div>
             <div className="col-span-2 md:col-span-1">
@@ -728,8 +729,8 @@ export default function App() {
         <div className="max-w-7xl mx-auto mt-20 pt-10 border-t border-hairline flex flex-col md:flex-row justify-between items-center gap-6">
           <p className="font-mono text-[9px] text-brand-chalk/30">{t('footer.rights')}</p>
           <div className="flex gap-8">
-            <a href="#" className="font-mono text-[9px] text-brand-chalk/30 hover:text-brand-teal transition-colors">{t('footer.privacy')}</a>
-            <a href="#" className="font-mono text-[9px] text-brand-chalk/30 hover:text-brand-teal transition-colors">{t('footer.terms')}</a>
+            <Link to="/legal" className="font-mono text-[9px] text-brand-chalk/30 hover:text-brand-teal transition-colors">{t('footer.privacy')}</Link>
+            <Link to="/legal" className="font-mono text-[9px] text-brand-chalk/30 hover:text-brand-teal transition-colors">{t('footer.terms')}</Link>
           </div>
         </div>
       </footer>
