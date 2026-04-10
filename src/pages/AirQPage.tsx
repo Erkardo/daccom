@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, CheckCircle2, Wifi, BarChart3, Shield, Thermometer, Droplets, Wind, Eye, Bell, Smartphone, Globe, Activity, Gauge, Building2, GraduationCap, Heart, TrendingUp, Users, Zap, Lock, Cloud, Layers } from 'lucide-react';
 import { useEffect } from 'react';
+import Navbar from '../components/Navbar';
 
 export default function AirQPage() {
   const { i18n } = useTranslation();
@@ -58,17 +59,8 @@ export default function AirQPage() {
       </div>
 
       {/* Nav */}
-      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-12 py-4 backdrop-blur-md border-b border-hairline bg-brand-bg/60">
-        <Link to="/" className="flex items-center gap-3 text-brand-chalk hover:text-brand-teal transition-colors group">
-          <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
-          <span className="font-mono text-[10px] uppercase tracking-widest">{isMn ? 'Нүүр хуудас' : 'Back Home'}</span>
-        </Link>
-        <div className="flex items-center gap-6">
-          <Link to="/techno-arm" className="font-mono text-[9px] text-brand-chalk hover:text-brand-teal transition-colors tracking-widest hidden md:block">Techno-Arm →</Link>
-          <Link to="/mining-ai" className="font-mono text-[9px] text-brand-chalk hover:text-orange-400 transition-colors tracking-widest hidden md:block">Mining AI →</Link>
-          <span className="font-mono text-[10px] text-brand-accent tracking-widest font-bold">AIRQ</span>
-        </div>
-      </nav>
+      <Navbar />
+
 
       {/* Hero */}
       <section className="relative pt-32 pb-24 px-6 md:px-12 lg:px-24 overflow-hidden">
