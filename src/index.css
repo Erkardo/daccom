@@ -172,3 +172,89 @@
     padding-top: 0 !important;
   }
 }
+
+:root {
+  --brochure-bg: #0a0a0b;
+  --brochure-bg-alt: #121214;
+  --brochure-text: #ffffff;
+  --brochure-text-muted: rgba(255, 255, 255, 0.5);
+  --brochure-text-dim: rgba(255, 255, 255, 0.3);
+  --brochure-border: rgba(255, 255, 255, 0.1);
+  --brochure-glass: rgba(255, 255, 255, 0.02);
+}
+
+.brochure-theme-light {
+  --brochure-bg: #ffffff;
+  --brochure-bg-alt: #f8fafc;
+  --brochure-text: #0f172a;
+  --brochure-text-muted: #64748b;
+  --brochure-text-dim: #94a3b8;
+  --brochure-border: #e2e8f0;
+  --brochure-glass: #f1f5f9;
+}
+
+@media print {
+  .brochure-theme-light {
+    --brochure-bg: #ffffff;
+    --brochure-text: #000000;
+  }
+}
+
+/* Brochure Theme Overrides */
+.brochure-theme-light .brochure-page {
+  background-color: var(--brochure-bg) !important;
+  color: var(--brochure-text) !important;
+  border-color: var(--brochure-border) !important;
+}
+
+/* Text Overrides */
+.brochure-theme-light .brochure-page h1,
+.brochure-theme-light .brochure-page h2,
+.brochure-theme-light .brochure-page h3,
+.brochure-theme-light .brochure-page .text-white {
+  color: var(--brochure-text) !important;
+}
+
+.brochure-theme-light .brochure-page p:not(.text-cyan-400):not(.text-purple-400):not(.text-orange-400),
+.brochure-theme-light .brochure-page .text-white\/50,
+.brochure-theme-light .brochure-page .text-white\/40,
+.brochure-theme-light .brochure-page .text-white\/60 {
+  color: var(--brochure-text-muted) !important;
+}
+
+.brochure-theme-light .brochure-page .font-mono,
+.brochure-theme-light .brochure-page .text-white\/30,
+.brochure-theme-light .brochure-page .text-white\/20,
+.brochure-theme-light .brochure-page .text-white\/15 {
+  color: var(--brochure-text-dim) !important;
+}
+
+/* Background & Border Overrides */
+.brochure-theme-light .brochure-page .bg-white\/\[0\.02\],
+.brochure-theme-light .brochure-page .bg-white\/\[0\.01\],
+.brochure-theme-light .brochure-page .bg-white\/\[0\.03\],
+.brochure-theme-light .brochure-page .bg-cyan-400\/\[0\.03\],
+.brochure-theme-light .brochure-page .bg-purple-400\/\[0\.03\],
+.brochure-theme-light .brochure-page .bg-orange-400\/\[0\.03\] {
+  background-color: var(--brochure-glass) !important;
+}
+
+.brochure-theme-light .brochure-page .border-white\/10,
+.brochure-theme-light .brochure-page .border-white\/5,
+.brochure-theme-light .brochure-page .border-white\/\[0\.05\] {
+  border-color: var(--brochure-border) !important;
+}
+
+.brochure-theme-light .brochure-page .glass {
+  background-color: var(--brochure-glass) !important;
+  border-color: var(--brochure-border) !important;
+  backdrop-filter: none !important;
+}
+
+/* Branding Exceptions - keep them bright but adjusted for light back */
+.brochure-theme-light .brochure-page .text-cyan-400 { color: #0891b2 !important; }
+.brochure-theme-light .brochure-page .text-purple-400 { color: #7c3aed !important; }
+.brochure-theme-light .brochure-page .text-orange-400 { color: #ea580c !important; }
+.brochure-theme-light .brochure-page .bg-cyan-400 { background-color: #0891b2 !important; color: white !important; }
+.brochure-theme-light .brochure-page .bg-brand-teal { background-color: #0891b2 !important; color: white !important; }
+.brochure-theme-light .brochure-page .text-brand-teal { color: #0891b2 !important; }

@@ -1,12 +1,15 @@
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Download, Settings, Wind, HardHat, CheckCircle2, Globe, ArrowRight, Zap, Shield, BarChart3, Cpu, Activity, Gauge, Target, Users, Building2, Heart, GraduationCap, Mail, Phone, MapPin, TrendingUp, Rocket } from 'lucide-react';
-import { useEffect, useRef } from 'react';
+import { ArrowLeft, Download, Settings, Wind, HardHat, CheckCircle2, Globe, ArrowRight, Zap, Shield, BarChart3, Cpu, Activity, Gauge, Target, Users, Building2, Heart, GraduationCap, Mail, Phone, MapPin, TrendingUp, Rocket, Sun, Moon, Maximize2, Share2, QrCode, X, Copy, Check } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
 
 export default function BrochurePage() {
   const { t, i18n } = useTranslation();
   const isMn = i18n.language === 'mn';
   const brochureRef = useRef<HTMLDivElement>(null);
+  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+  const [showShareModal, setShowShareModal] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
@@ -14,21 +17,116 @@ export default function BrochurePage() {
     window.print();
   };
 
+  const toggleFullScreen = () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen();
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      }
+    }
+  };
+
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText(window.location.href);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
-    <div className="min-h-screen bg-[#0a0a0b]">
+    <div className={`min-h-screen transition-all duration-700 ${theme === 'dark' ? '' : 'brochure-theme-light'}`} style={{ backgroundColor: 'var(--brochure-bg)', color: 'var(--brochure-text)' }}>
       {/* Screen-only toolbar */}
-      <div className="print:hidden fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-12 py-4 backdrop-blur-md border-b border-white/10 bg-[#0a0a0b]/80">
-        <Link to="/" className="flex items-center gap-3 text-white/60 hover:text-cyan-400 transition-colors group">
-          <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
-          <span className="font-mono text-[10px] uppercase tracking-widest">{isMn ? 'Нүүр хуудас' : 'Back to Site'}</span>
-        </Link>
+      <div className={`print:hidden fixed top-0 left-0 right-0 z-[100] flex items-center justify-between px-6 md:px-12 py-4 backdrop-blur-md border-b transition-all ${theme === 'dark' ? 'border-white/10 bg-[#0a0a0b]/80' : 'border-slate-200 bg-white/80'}`}>
+        <div className="flex items-center gap-6">
+          <Link to="/" className={`flex items-center gap-3 transition-colors group ${theme === 'dark' ? 'text-white/60 hover:text-cyan-400' : 'text-slate-500 hover:text-cyan-600'}`}>
+            <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
+            <span className="font-mono text-[10px] uppercase tracking-widest">{isMn ? 'Нүүр хуудас' : 'Back to Site'}</span>
+          </Link>
+          
+          <div className={`h-4 w-[1px] ${theme === 'dark' ? 'bg-white/10' : 'bg-slate-200'}`} />
+          
+          <div className="flex items-center gap-2">
+            <button 
+              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+              className={`p-2 rounded-lg transition-all ${theme === 'dark' ? 'hover:bg-white/5 text-white/40 hover:text-cyan-400' : 'hover:bg-slate-100 text-slate-400 hover:text-cyan-600'}`}
+              title={theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
+            >
+              {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+            </button>
+            <button 
+              onClick={toggleFullScreen}
+              className={`p-2 rounded-lg transition-all ${theme === 'dark' ? 'hover:bg-white/5 text-white/40 hover:text-cyan-400' : 'hover:bg-slate-100 text-slate-400 hover:text-cyan-600'}`}
+              title="Fullscreen Presentation"
+            >
+              <Maximize2 size={18} />
+            </button>
+            <button 
+              onClick={() => setShowShareModal(true)}
+              className={`p-2 rounded-lg transition-all ${theme === 'dark' ? 'hover:bg-white/5 text-white/40 hover:text-cyan-400' : 'hover:bg-slate-100 text-slate-400 hover:text-cyan-600'}`}
+              title="Share / QR Code"
+            >
+              <Share2 size={18} />
+            </button>
+          </div>
+        </div>
+
         <div className="flex items-center gap-4">
-          <button onClick={handlePrint} className="flex items-center gap-2 px-6 py-2.5 bg-cyan-400 text-[#0a0a0b] rounded-xl font-mono text-[10px] font-bold hover:bg-white transition-colors">
+          <button onClick={handlePrint} className={`flex items-center gap-2 px-6 py-2.5 rounded-xl font-mono text-[10px] font-bold transition-all shadow-lg ${theme === 'dark' ? 'bg-cyan-400 text-[#0a0a0b] hover:bg-white' : 'bg-slate-900 text-white hover:bg-cyan-600'}`}>
             <Download size={14} />
             {isMn ? 'PDF татах' : 'Download PDF'}
           </button>
         </div>
       </div>
+
+      {/* Share Modal */}
+      {showShareModal && (
+        <div className="fixed inset-0 z-[200] flex items-center justify-center p-6 bg-black/60 backdrop-blur-sm">
+          <div className={`w-full max-w-sm p-8 rounded-3xl shadow-2xl relative transition-all animate-in fade-in zoom-in duration-300 ${theme === 'dark' ? 'bg-[#121214] border border-white/10' : 'bg-white border border-slate-200'}`}>
+            <button 
+              onClick={() => setShowShareModal(false)}
+              className={`absolute top-6 right-6 p-2 rounded-full transition-colors ${theme === 'dark' ? 'hover:bg-white/5 text-white/40' : 'hover:bg-slate-100 text-slate-400'}`}
+            >
+              <X size={20} />
+            </button>
+
+            <div className="text-center mb-8">
+              <div className={`w-16 h-16 rounded-2xl mx-auto mb-6 flex items-center justify-center ${theme === 'dark' ? 'bg-cyan-400/10 text-cyan-400' : 'bg-cyan-50 text-cyan-600'}`}>
+                <QrCode size={32} />
+              </div>
+              <h3 className={`text-xl font-bold mb-2 ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>
+                {isMn ? 'Ухаалаг түгээлт' : 'Smart Share'}
+              </h3>
+              <p className={`text-sm ${theme === 'dark' ? 'text-white/40' : 'text-slate-500'}`}>
+                {isMn ? 'Хэнд ч, хаанаас ч амархан үзүүл.' : 'Show it easily to anyone, anywhere.'}
+              </p>
+            </div>
+
+            {/* Simulated QR Code for now (would use a library like qrcode.react in real app) */}
+            <div className={`w-48 h-48 mx-auto mb-8 p-4 rounded-2xl flex items-center justify-center border-2 transition-all ${theme === 'dark' ? 'bg-white border-transparent' : 'bg-white border-slate-100 shadow-inner'}`}>
+               <svg className="w-full h-full text-slate-900" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M3 3h8v8H3V3zm2 2v4h4V5H5zm8-2h8v8h-8V3zm2 2v4h4V5h-4zM3 13h8v8H3v-8zm2 2v4h4v-4H5zm13-2h3v2h-3v-2zm-3 0h2v3h-2v-3zm3 3h3v2h-3v-2zm-3 3h2v2h-2v-2zm3-3h3v2h-3v-2zm-3 3h2v2h-2v-2zM13 13h2v2h-2v-2zm0 3h2v2h-2v-2zm3 0h2v2h-2v-2z" />
+               </svg>
+            </div>
+
+            <div className="space-y-3">
+              <button 
+                onClick={handleCopyLink}
+                className={`w-full flex items-center justify-between p-4 rounded-2xl transition-all font-mono text-[10px] tracking-widest ${theme === 'dark' ? 'bg-white/5 hover:bg-white/10 text-white' : 'bg-slate-50 hover:bg-slate-100 text-slate-900'}`}
+              >
+                {isMn ? 'ЛИНК ХУУЛБАХ' : 'COPY BROADCAST LINK'}
+                {copied ? <Check size={16} className="text-green-400" /> : <Copy size={16} className={theme === 'dark' ? 'text-white/20' : 'text-slate-400'} />}
+              </button>
+              <a 
+                href={`mailto:?subject=Daccom Partners Digital Brochure&body=Please view our digital brochure here: ${window.location.href}`}
+                className={`w-full flex items-center justify-between p-4 rounded-2xl transition-all font-mono text-[10px] tracking-widest ${theme === 'dark' ? 'bg-white/5 hover:bg-white/10 text-white' : 'bg-slate-50 hover:bg-slate-100 text-slate-900'}`}
+              >
+                {isMn ? 'ИМЭЙЛЭЭР ИЛГЭЭХ' : 'SHARE VIA EMAIL'}
+                <Mail size={16} className={theme === 'dark' ? 'text-white/20' : 'text-slate-400'} />
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Brochure content */}
       <div ref={brochureRef} className="brochure-content pt-20 print:pt-0">
