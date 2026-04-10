@@ -7,6 +7,7 @@ import { motion, useScroll, useSpring, useMotionValue, useTransform, AnimatePres
 import { Landmark, Settings, Brain, Zap, Globe, ArrowUpRight, ChevronRight, Play, Cpu, Shield, BarChart3, Rocket, Users, MessageSquare, Mail, Phone, MapPin, CheckCircle2, Trophy, Plane, Building2, Key, Wind, Activity, HardHat, BedDouble, Facebook, Twitter, Linkedin, Instagram, Languages } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import SmartTools from "./components/SmartTools";
 
 export default function App() {
   const { t, i18n } = useTranslation();
@@ -602,6 +603,9 @@ export default function App() {
           </motion.p>
         </div>
       </section>
+
+      {/* Smart Tools Section */}
+      <SmartTools />
 
       {/* Contact Section */}
       <section id="contact" className="py-32 px-6 md:px-12 lg:px-24">

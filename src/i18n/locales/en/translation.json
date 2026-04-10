@@ -173,5 +173,87 @@
     "rights": "© 2026 DACCOM PARTNERS LLC. ALL RIGHTS RESERVED.",
     "privacy": "Privacy Policy",
     "terms": "Terms of Service"
+  },
+  "tools": {
+    "badge": "SMART ASSESSMENTS",
+    "title": "Data-Driven",
+    "title_italic": "Intelligence",
+    "description": "Leverage our AI-powered calculators to evaluate your current operational state and uncover hidden technological opportunities.",
+    "tabs": {
+      "roi": "ROI Calculator",
+      "risk": "Risk Estimator",
+      "readiness": "AI Readiness",
+      "airq": "Air Quality"
+    },
+    "roi": {
+      "title": "Automation ROI Calculator",
+      "desc": "Calculate tangible savings generated through robotic integration and AI.",
+      "employees": "Number of manual laborers",
+      "avg_salary": "Avg monthly salary (MNT, millions)",
+      "error_rate": "Current operational error rate (%)",
+      "calc_btn": "Analyze",
+      "result": {
+        "savings": "Estimated Annual Savings",
+        "roi_time": "Break-even Payback Time",
+        "efficiency": "Productivity Increase",
+        "cta": "Consult an Expert"
+      }
+    },
+    "risk": {
+      "title": "Equipment Downtime Risk Estimator",
+      "desc": "Assess your vulnerability to critical failure and need for Predictive Maintenance.",
+      "q1": "Average lifespan of your heavy machinery?",
+      "q1_o1": "0-3 years",
+      "q1_o2": "3-7 years",
+      "q1_o3": "7+ years",
+      "q2": "Equipment failure frequency in the last 12 months?",
+      "q3": "Primary maintenance strategy?",
+      "q3_o1": "Fixed Schedule",
+      "q3_o2": "Reactive (Break/Fix)",
+      "q3_o3": "Condition-based",
+      "calc_btn": "Estimate Risk",
+      "result": {
+        "risk_level": "Downtime Risk Exposure",
+        "risk_high": "CRITICAL",
+        "risk_med": "ELEVATED",
+        "risk_low": "OPTIMAL",
+        "recommendation": "Recommendation: Integrating IoT sensors with AI anomaly detection can reduce unplanned downtime by up to 80%.",
+        "cta": "Explore IoT Solutions"
+      }
+    },
+    "readiness": {
+      "title": "AI & Digital Maturity Assessment",
+      "desc": "Is your enterprise infrastructure prepared for an AI transformation?",
+      "q1": "How is operational data primarily collected?",
+      "q1_o1": "Paper / Physical",
+      "q1_o2": "Spreadsheets",
+      "q1_o3": "ERP / Central Cloud",
+      "q2": "Percentage of highly repetitive manual workflows?",
+      "q2_o1": "Majority (70%+)",
+      "q2_o2": "Moderate (30-70%)",
+      "q2_o3": "Minimal (Automated)",
+      "calc_btn": "Evaluate Maturity",
+      "result": {
+        "score": "Maturity Index Score",
+        "message": "Your enterprise architecture exhibits high potential for AI Vision and process automation integration.",
+        "cta": "Initiate Transformation"
+      }
+    },
+    "airq": {
+      "title": "Indoor Air Quality & Productivity Impact",
+      "desc": "Calculate the cognitive impact of CO2 accumulation in your workspaces.",
+      "area": "Workspace total area (sq.m)",
+      "people": "Number of occupants",
+      "ventilation": "Active HVAC system installed?",
+      "yes": "Yes",
+      "no": "No",
+      "calc_btn": "Run Simulation",
+      "result": {
+        "co2": "Time to critical CO2 saturation",
+        "loss": "Projected Cognitive Decline",
+        "recommendation": "Deploying the AirQ ecosystem enables autonomous ventilation control, perpetually sustaining peak cognitive performance.",
+        "cta": "Proceed to AirQ"
+      }
+    }
   }
 }
