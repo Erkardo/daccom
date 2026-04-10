@@ -7,6 +7,7 @@ export default function BrochurePage() {
   const { t, i18n } = useTranslation();
   const isMn = i18n.language === 'mn';
   const brochureRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
   const [showShareModal, setShowShareModal] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -18,15 +19,29 @@ export default function BrochurePage() {
     window.scrollTo(0, 0); 
   }, [isPresenting]);
 
+  // Sync state with native fullscreen exit (Esc key)
+  useEffect(() => {
+    const handleFsChange = () => {
+      if (!document.fullscreenElement) {
+        setIsPresenting(false);
+      }
+    };
+    document.addEventListener('fullscreenchange', handleFsChange);
+    return () => document.removeEventListener('fullscreenchange', handleFsChange);
+  }, []);
+
   // Keyboard navigation for presentation mode
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (!isPresenting) return;
-      if (e.key === 'ArrowRight' || e.key === ' ') {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') {
         setCurrentPage(prev => Math.min(prev + 1, totalPages - 1));
       } else if (e.key === 'ArrowLeft') {
         setCurrentPage(prev => Math.max(prev - 1, 0));
       } else if (e.key === 'Escape') {
+        if (document.fullscreenElement) {
+          document.exitFullscreen().catch(() => {});
+        }
         setIsPresenting(false);
       }
     };
@@ -39,12 +54,17 @@ export default function BrochurePage() {
   };
 
   const togglePresentation = () => {
-    setIsPresenting(!isPresenting);
-    setCurrentPage(0);
-    if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen().catch(() => {});
+    if (!isPresenting) {
+      setIsPresenting(true);
+      setCurrentPage(0);
+      if (containerRef.current && !document.fullscreenElement) {
+        containerRef.current.requestFullscreen().catch(() => {});
+      }
     } else {
-      document.exitFullscreen().catch(() => {});
+      if (document.fullscreenElement) {
+        document.exitFullscreen().catch(() => {});
+      }
+      setIsPresenting(false);
     }
   };
 
@@ -55,49 +75,51 @@ export default function BrochurePage() {
   };
 
   return (
-    <div className={`min-h-screen transition-all duration-700 ${theme === 'dark' ? '' : 'brochure-theme-light'}`} style={{ backgroundColor: 'var(--brochure-bg)', color: 'var(--brochure-text)' }}>
+    <div ref={containerRef} className={`min-h-screen transition-all duration-700 ${theme === 'dark' ? '' : 'brochure-theme-light'} ${isPresenting ? 'brochure-presenting overflow-hidden h-screen bg-[#0a0a0b]' : ''}`} style={{ backgroundColor: 'var(--brochure-bg)', color: 'var(--brochure-text)' }}>
       {/* Screen-only toolbar */}
-      <div className={`print:hidden fixed top-0 left-0 right-0 z-[100] flex items-center justify-between px-6 md:px-12 py-4 backdrop-blur-md border-b transition-all ${theme === 'dark' ? 'border-white/10 bg-[#0a0a0b]/80' : 'border-slate-200 bg-white/80'}`}>
-        <div className="flex items-center gap-6">
-          <Link to="/" className={`flex items-center gap-3 transition-colors group ${theme === 'dark' ? 'text-white/60 hover:text-cyan-400' : 'text-slate-500 hover:text-cyan-600'}`}>
-            <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
-            <span className="font-mono text-[10px] uppercase tracking-widest">{isMn ? 'Нүүр хуудас' : 'Back to Site'}</span>
-          </Link>
-          
-          <div className={`h-4 w-[1px] ${theme === 'dark' ? 'bg-white/10' : 'bg-slate-200'}`} />
-          
-          <div className="flex items-center gap-2">
-            <button 
-              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              className={`p-2 rounded-lg transition-all ${theme === 'dark' ? 'hover:bg-white/5 text-white/40 hover:text-cyan-400' : 'hover:bg-slate-100 text-slate-400 hover:text-cyan-600'}`}
-              title={theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
-            >
-              {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
-            </button>
-            <button 
-              onClick={togglePresentation}
-              className={`p-2 rounded-lg transition-all ${theme === 'dark' ? 'hover:bg-white/5 text-white/40 hover:text-cyan-400' : 'hover:bg-slate-100 text-slate-400 hover:text-cyan-600'}`}
-              title="Presentation Mode"
-            >
-              <Maximize2 size={18} />
-            </button>
-            <button 
-              onClick={() => setShowShareModal(true)}
-              className={`p-2 rounded-lg transition-all ${theme === 'dark' ? 'hover:bg-white/5 text-white/40 hover:text-cyan-400' : 'hover:bg-slate-100 text-slate-400 hover:text-cyan-600'}`}
-              title="Share / QR Code"
-            >
-              <Share2 size={18} />
+      {!isPresenting && (
+        <div className={`print:hidden fixed top-0 left-0 right-0 z-[100] flex items-center justify-between px-6 md:px-12 py-4 backdrop-blur-md border-b transition-all ${theme === 'dark' ? 'border-white/10 bg-[#0a0a0b]/80' : 'border-slate-200 bg-white/80'}`}>
+          <div className="flex items-center gap-6">
+            <Link to="/" className={`flex items-center gap-3 transition-colors group ${theme === 'dark' ? 'text-white/60 hover:text-cyan-400' : 'text-slate-500 hover:text-cyan-600'}`}>
+              <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
+              <span className="font-mono text-[10px] uppercase tracking-widest">{isMn ? 'Нүүр хуудас' : 'Back to Site'}</span>
+            </Link>
+            
+            <div className={`h-4 w-[1px] ${theme === 'dark' ? 'bg-white/10' : 'bg-slate-200'}`} />
+            
+            <div className="flex items-center gap-2">
+              <button 
+                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                className={`p-2 rounded-lg transition-all ${theme === 'dark' ? 'hover:bg-white/5 text-white/40 hover:text-cyan-400' : 'hover:bg-slate-100 text-slate-400 hover:text-cyan-600'}`}
+                title={theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
+              >
+                {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+              </button>
+              <button 
+                onClick={togglePresentation}
+                className={`p-2 rounded-lg transition-all ${theme === 'dark' ? 'hover:bg-white/5 text-white/40 hover:text-cyan-400' : 'hover:bg-slate-100 text-slate-400 hover:text-cyan-600'}`}
+                title="Presentation Mode"
+              >
+                <Maximize2 size={18} />
+              </button>
+              <button 
+                onClick={() => setShowShareModal(true)}
+                className={`p-2 rounded-lg transition-all ${theme === 'dark' ? 'hover:bg-white/5 text-white/40 hover:text-cyan-400' : 'hover:bg-slate-100 text-slate-400 hover:text-cyan-600'}`}
+                title="Share / QR Code"
+              >
+                <Share2 size={18} />
+              </button>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-4">
+            <button onClick={handlePrint} className={`flex items-center gap-2 px-6 py-2.5 rounded-xl font-mono text-[10px] font-bold transition-all shadow-lg ${theme === 'dark' ? 'bg-cyan-400 text-[#0a0a0b] hover:bg-white' : 'bg-slate-900 text-white hover:bg-cyan-600'}`}>
+              <Download size={14} />
+              {isMn ? 'PDF татах' : 'Download PDF'}
             </button>
           </div>
         </div>
-
-        <div className="flex items-center gap-4">
-          <button onClick={handlePrint} className={`flex items-center gap-2 px-6 py-2.5 rounded-xl font-mono text-[10px] font-bold transition-all shadow-lg ${theme === 'dark' ? 'bg-cyan-400 text-[#0a0a0b] hover:bg-white' : 'bg-slate-900 text-white hover:bg-cyan-600'}`}>
-            <Download size={14} />
-            {isMn ? 'PDF татах' : 'Download PDF'}
-          </button>
-        </div>
-      </div>
+      )}
 
       {/* Share Modal */}
       {showShareModal && (
@@ -202,13 +224,13 @@ export default function BrochurePage() {
         className={`brochure-content transition-all duration-500 ${!isPresenting ? 'pt-20 print:pt-0' : 'h-screen w-screen overflow-hidden'}`}
       >
         <div 
-          className={`transition-transform duration-700 ease-in-out ${isPresenting ? 'flex h-screen w-screen' : 'flex flex-col items-center space-y-8 pb-32'}`}
-          style={isPresenting ? { transform: `translateX(-${currentPage * 100}%)`, width: `${totalPages * 100}%` } : {}}
+          className={`transition-transform duration-700 ease-in-out ${isPresenting ? 'flex h-screen' : 'flex flex-col items-center space-y-8 pb-32'}`}
+          style={isPresenting ? { transform: `translateX(-${currentPage * 100}vw)`, width: `${totalPages * 100}vw` } : {}}
         >
 
         {/* ═══════════════════════════════════════════════════════════════ */}
             {/* PAGE 1: COVER */}
-            <div className={`brochure-page relative shrink-0 overflow-hidden flex items-center justify-center ${isPresenting ? 'w-screen h-screen border-none rounded-none' : 'shadow-xl shadow-cyan-900/10'}`}>
+            <div className={`brochure-page relative shrink-0 overflow-hidden flex items-center justify-center ${isPresenting ? 'w-screen h-screen border-none rounded-none brochure-presentation-slide' : 'shadow-xl shadow-cyan-900/10'}`}>
               <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0b] via-[#0d1117] to-[#0a0a0b] page-bg-gradient transition-all duration-700" />
           {/* Background elements */}
           <div className="absolute inset-0">
@@ -283,7 +305,7 @@ export default function BrochurePage() {
         {/* ═══════════════════════════════════════════════════════════════ */}
         {/* PAGE 2: ABOUT US */}
         {/* ═══════════════════════════════════════════════════════════════ */}
-        <div className={`brochure-page relative shrink-0 bg-[#0a0a0b] px-12 py-16 flex flex-col justify-between ${isPresenting ? 'w-screen h-screen border-none rounded-none' : 'shadow-xl shadow-cyan-900/10'}`}>
+        <div className={`brochure-page relative shrink-0 bg-[#0a0a0b] px-12 py-16 flex flex-col justify-between ${isPresenting ? 'w-screen h-screen border-none rounded-none brochure-presentation-slide' : 'shadow-xl shadow-cyan-900/10'}`}>
           <div>
             <div className="flex items-center gap-3 mb-8">
               <div className="w-8 h-[1px] bg-cyan-400" />
@@ -342,7 +364,7 @@ export default function BrochurePage() {
         {/* ═══════════════════════════════════════════════════════════════ */}
         {/* PAGE 3: TECHNO-ARM */}
         {/* ═══════════════════════════════════════════════════════════════ */}
-        <div className={`brochure-page relative shrink-0 bg-[#0a0a0b] px-12 py-16 flex flex-col justify-between ${isPresenting ? 'w-screen h-screen border-none rounded-none' : 'shadow-xl shadow-cyan-900/10'}`}>
+        <div className={`brochure-page relative shrink-0 bg-[#0a0a0b] px-12 py-16 flex flex-col justify-between ${isPresenting ? 'w-screen h-screen border-none rounded-none brochure-presentation-slide' : 'shadow-xl shadow-cyan-900/10'}`}>
           <div>
             <div className="flex items-center gap-3 mb-8">
               <div className="w-8 h-[1px] bg-cyan-400" />
@@ -454,7 +476,7 @@ export default function BrochurePage() {
         {/* ═══════════════════════════════════════════════════════════════ */}
         {/* PAGE 4: AIRQ */}
         {/* ═══════════════════════════════════════════════════════════════ */}
-        <div className={`brochure-page relative shrink-0 bg-[#0a0a0b] px-12 py-16 flex flex-col justify-between ${isPresenting ? 'w-screen h-screen border-none rounded-none' : 'shadow-xl shadow-cyan-900/10'}`}>
+        <div className={`brochure-page relative shrink-0 bg-[#0a0a0b] px-12 py-16 flex flex-col justify-between ${isPresenting ? 'w-screen h-screen border-none rounded-none brochure-presentation-slide' : 'shadow-xl shadow-cyan-900/10'}`}>
           <div>
             <div className="flex items-center gap-3 mb-8">
               <div className="w-8 h-[1px] bg-purple-400" />
@@ -536,7 +558,7 @@ export default function BrochurePage() {
         {/* ═══════════════════════════════════════════════════════════════ */}
         {/* PAGE 5: MINING AI */}
         {/* ═══════════════════════════════════════════════════════════════ */}
-        <div className={`brochure-page relative shrink-0 bg-[#0a0a0b] px-12 py-16 flex flex-col justify-between ${isPresenting ? 'w-screen h-screen border-none rounded-none' : 'shadow-xl shadow-cyan-900/10'}`}>
+        <div className={`brochure-page relative shrink-0 bg-[#0a0a0b] px-12 py-16 flex flex-col justify-between ${isPresenting ? 'w-screen h-screen border-none rounded-none brochure-presentation-slide' : 'shadow-xl shadow-cyan-900/10'}`}>
           <div>
             <div className="flex items-center gap-3 mb-8">
               <div className="w-8 h-[1px] bg-orange-400" />
@@ -629,11 +651,11 @@ export default function BrochurePage() {
         {/* ═══════════════════════════════════════════════════════════════ */}
         {/* PAGE 6: RESEARCH */}
         {/* ═══════════════════════════════════════════════════════════════ */}
-        <div className={`brochure-page relative shrink-0 bg-[#0a0a0b] px-12 py-16 flex flex-col justify-between ${isPresenting ? 'w-screen h-screen border-none rounded-none' : 'shadow-xl shadow-cyan-900/10'}`}>
+        <div className={`brochure-page relative shrink-0 bg-[#0a0a0b] px-12 py-16 flex flex-col justify-between brochure-presentation-slide ${isPresenting ? 'w-screen h-screen border-none rounded-none' : 'shadow-xl shadow-cyan-900/10'}`}>
           <div>
             <div className="flex items-center gap-3 mb-8">
               <div className="w-8 h-[1px] bg-cyan-400" />
-              <span className="font-mono text-[9px] text-cyan-400 tracking-widest">06 — RESEARCH</span>
+              <span className="font-mono text-[9px] text-cyan-400 tracking-widest">05 — RESEARCH</span>
             </div>
 
             <div className="grid grid-cols-12 gap-12">
@@ -681,18 +703,19 @@ export default function BrochurePage() {
 
           <div className="flex items-center justify-between mt-8">
             <p className="font-mono text-[8px] text-white/15 tracking-widest">DACCOM — RESEARCH & INSIGHTS</p>
-            <p className="font-mono text-[8px] text-white/15">06</p>
+            <p className="font-mono text-[8px] text-white/15">05</p>
           </div>
         </div>
+
 
         {/* ═══════════════════════════════════════════════════════════════ */}
         {/* PAGE 7: PARTNERSHIP */}
         {/* ═══════════════════════════════════════════════════════════════ */}
-        <div className={`brochure-page relative shrink-0 bg-[#0a0a0b] px-12 py-16 flex flex-col justify-between ${isPresenting ? 'w-screen h-screen border-none rounded-none' : 'shadow-xl shadow-cyan-900/10'}`}>
+        <div className={`brochure-page relative shrink-0 bg-[#0a0a0b] px-12 py-16 flex flex-col justify-between brochure-presentation-slide ${isPresenting ? 'w-screen h-screen border-none rounded-none' : 'shadow-xl shadow-cyan-900/10'}`}>
           <div>
             <div className="flex items-center gap-3 mb-8">
               <div className="w-8 h-[1px] bg-brand-teal" />
-              <span className="font-mono text-[9px] text-brand-teal tracking-widest">07 — PARTNERSHIP</span>
+              <span className="font-mono text-[9px] text-brand-teal tracking-widest">06 — PARTNERSHIP</span>
             </div>
 
             <div className="text-center mb-12">
@@ -726,18 +749,18 @@ export default function BrochurePage() {
 
           <div className="flex items-center justify-between mt-8">
             <p className="font-mono text-[8px] text-white/15 tracking-widest">DACCOM — ENGAGEMENT MODEL</p>
-            <p className="font-mono text-[8px] text-white/15">07</p>
+            <p className="font-mono text-[8px] text-white/15">06</p>
           </div>
         </div>
 
         {/* ═══════════════════════════════════════════════════════════════ */}
         {/* PAGE 8: RELIABILITY */}
         {/* ═══════════════════════════════════════════════════════════════ */}
-        <div className={`brochure-page relative shrink-0 bg-[#0a0a0b] px-12 py-16 flex flex-col justify-between ${isPresenting ? 'w-screen h-screen border-none rounded-none' : 'shadow-xl shadow-cyan-900/10'}`}>
+        <div className={`brochure-page relative shrink-0 bg-[#0a0a0b] px-12 py-16 flex flex-col justify-between brochure-presentation-slide ${isPresenting ? 'w-screen h-screen border-none rounded-none' : 'shadow-xl shadow-cyan-900/10'}`}>
           <div>
             <div className="flex items-center gap-3 mb-8">
               <div className="w-8 h-[1px] bg-cyan-400" />
-              <span className="font-mono text-[9px] text-cyan-400 tracking-widest">08 — RELIABILITY</span>
+              <span className="font-mono text-[9px] text-cyan-400 tracking-widest">07 — RELIABILITY</span>
             </div>
 
             <div className="grid grid-cols-2 gap-12">
@@ -788,18 +811,18 @@ export default function BrochurePage() {
 
           <div className="flex items-center justify-between mt-8">
             <p className="font-mono text-[8px] text-white/15 tracking-widest">DACCOM — FAQ & TRUST</p>
-            <p className="font-mono text-[8px] text-white/15">08</p>
+            <p className="font-mono text-[8px] text-white/15">07</p>
           </div>
         </div>
 
         {/* ═══════════════════════════════════════════════════════════════ */}
         {/* PAGE 9: TEAM */}
         {/* ═══════════════════════════════════════════════════════════════ */}
-        <div className={`brochure-page relative shrink-0 px-12 py-16 flex flex-col justify-between ${isPresenting ? 'w-screen h-screen border-none rounded-none bg-gradient-to-br from-[#0a0a0b] via-[#0d1117] to-[#0a0a0b]' : 'shadow-xl shadow-cyan-900/10 bg-gradient-to-br from-[#0a0a0b] via-[#0d1117] to-[#0a0a0b]'}`}>
+        <div className={`brochure-page relative shrink-0 px-12 py-16 flex flex-col justify-between brochure-presentation-slide ${isPresenting ? 'w-screen h-screen border-none rounded-none bg-gradient-to-br from-[#0a0a0b] via-[#0d1117] to-[#0a0a0b]' : 'shadow-xl shadow-cyan-900/10 bg-gradient-to-br from-[#0a0a0b] via-[#0d1117] to-[#0a0a0b]'}`}>
           <div>
             <div className="flex items-center gap-3 mb-8">
               <div className="w-8 h-[1px] bg-cyan-400" />
-              <span className="font-mono text-[9px] text-cyan-400 tracking-widest">09 — {isMn ? 'БАГ & ХОЛБОО БАРИХ' : 'TEAM & CONTACT'}</span>
+              <span className="font-mono text-[9px] text-cyan-400 tracking-widest">08 — {isMn ? 'БАГ & ХОЛБОО БАРИХ' : 'TEAM & CONTACT'}</span>
             </div>
 
             <h2 className="text-4xl font-bold text-white mb-8 leading-tight" style={{ fontFamily: 'Manrope, sans-serif' }}>
@@ -875,12 +898,12 @@ export default function BrochurePage() {
                 <text x="352" y="158" fill="#EDE9DF" style={{ fontFamily: 'Manrope, sans-serif', fontSize: '41px', fontWeight: 800 }}>DACCOM</text>
                 <text x="354" y="183" fill="#94A8BE" style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '11px', fontWeight: 500 }}>PARTNERS</text>
               </svg>
-              <p className="font-mono text-[8px] text-white/15">09</p>
+              <p className="font-mono text-[8px] text-white/15">08</p>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  );
-}
+);
+};

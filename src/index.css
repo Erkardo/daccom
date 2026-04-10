@@ -258,9 +258,67 @@
 }
 
 .brochure-theme-light .brochure-page .glass {
-  background-color: var(--brochure-glass) !important;
+  background: var(--brochure-glass) !important;
   border-color: var(--brochure-border) !important;
-  backdrop-filter: none !important;
+  backdrop-filter: blur(12px) !important;
+}
+
+/* ══════════════════════════════════════════════ */
+/* PRESENTATION MODE (PowerPoint Style)         */
+/* ══════════════════════════════════════════════ */
+
+.brochure-presenting {
+  background-color: #000000 !important;
+}
+
+.brochure-presenting .brochure-content {
+  padding-top: 0 !important;
+}
+
+.brochure-presenting .brochure-page {
+  width: 100vw !important;
+  height: 100vh !important;
+  max-width: none !important;
+  max-height: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  flex-shrink: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: hidden !important;
+  background-color: #000000 !important;
+}
+
+/* Fix light mode in presentation */
+.brochure-theme-light.brochure-presenting .brochure-page {
+  background-color: #ffffff !important;
+}
+
+/* Scale and Center Content */
+.brochure-presenting .brochure-page > div:not(.absolute) {
+  transform: scale(0.9); /* Start slightly smaller for safe area */
+  width: 100% !important;
+  max-width: 1280px !important; 
+  height: 90% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  transition: all 0.5s ease-out;
+  margin: 0 auto !important;
+}
+
+/* Widescreen Scaling */
+@media (min-aspect-ratio: 16/9) {
+  .brochure-presenting .brochure-page > div:not(.absolute) {
+    transform: scale(1.15); /* Scale up to fill width */
+  }
+}
+
+@media (min-width: 1920px) {
+  .brochure-presenting .brochure-page > div:not(.absolute) {
+    transform: scale(1.3);
+  }
 }
 
 /* Branding Exceptions - keep them bright but adjusted for light back */
