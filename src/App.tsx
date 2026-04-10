@@ -4,12 +4,13 @@
  */
 
 import { motion, useScroll, useSpring, useMotionValue, useTransform, AnimatePresence } from "motion/react";
-import { Landmark, Settings, Brain, Zap, Globe, ArrowUpRight, ChevronRight, Play, Cpu, Shield, BarChart3, Rocket, Users, MessageSquare, Mail, Phone, MapPin, CheckCircle2, Trophy, Plane, Building2, Key, Wind, Activity, HardHat, BedDouble, Facebook, Twitter, Linkedin, Instagram, Languages } from "lucide-react";
+import { Landmark, Settings, Brain, Zap, Globe, ArrowUpRight, ChevronRight, Play, Cpu, Shield, BarChart3, Rocket, Users, MessageSquare, Mail, Phone, MapPin, CheckCircle2, Trophy, Plane, Building2, Key, Wind, Activity, HardHat, BedDouble, Facebook, Twitter, Linkedin, Instagram, Languages, BookOpen } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import SmartTools from "./components/SmartTools";
 import Navbar, { Logo } from "./components/Navbar";
+import BrochureButton from "./components/BrochureButton";
 
 export default function App() {
   const { t, i18n } = useTranslation();
@@ -122,6 +123,9 @@ export default function App() {
       </div>
 
       <Navbar />
+
+      {/* Floating Brochure Button */}
+      <BrochureButton />
 
       {/* Hero Section */}
       <section className="relative pt-48 pb-32 px-6 md:px-12 lg:px-24 overflow-hidden">

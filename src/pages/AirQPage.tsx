@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, CheckCircle2, Wifi, BarChart3, Shield, Thermometer, Droplets, Wind, Eye, Bell, Smartphone, Globe, Activity, Gauge, Building2, GraduationCap, Heart, TrendingUp, Users, Zap, Lock, Cloud, Layers } from 'lucide-react';
 import { useEffect } from 'react';
 import Navbar from '../components/Navbar';
+import BrochureButton from '../components/BrochureButton';
 
 export default function AirQPage() {
   const { i18n } = useTranslation();
@@ -60,6 +61,7 @@ export default function AirQPage() {
 
       {/* Nav */}
       <Navbar />
+      <BrochureButton />
 
 
       {/* Hero */}

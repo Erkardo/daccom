@@ -119,4 +119,56 @@
   .btn-outline {
     @apply px-8 py-4 border border-brand-accent/30 text-brand-paper rounded-full font-heading font-bold hover:bg-brand-accent/10 transition-all hover:border-brand-accent;
   }
+
+  /* Brochure Pages */
+  .brochure-page {
+    width: 100%;
+    max-width: 960px;
+    min-height: 680px;
+    margin: 0 auto 2rem;
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 1rem;
+    overflow: hidden;
+  }
+
+  .brochure-page:first-child {
+    min-height: 680px;
+  }
+}
+
+/* Print styles */
+@media print {
+  @page {
+    size: landscape;
+    margin: 0;
+  }
+
+  body {
+    background: #0a0a0b !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .brochure-page {
+    max-width: 100%;
+    min-height: 100vh;
+    margin: 0;
+    border: none;
+    border-radius: 0;
+    page-break-after: always;
+    break-after: page;
+  }
+
+  .brochure-page:last-child {
+    page-break-after: avoid;
+  }
+
+  .print\\:hidden {
+    display: none !important;
+  }
+
+  .print\\:pt-0 {
+    padding-top: 0 !important;
+  }
 }

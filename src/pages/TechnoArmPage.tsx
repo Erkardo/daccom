@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, CheckCircle2, Cpu, Target, Gauge, Weight, CircleDollarSign, Zap, Shield, Settings, Wrench, Factory, Truck, Droplets, Package, ChevronRight, Eye, Layers, Code, Cog, GraduationCap, Globe, Users, TrendingUp, Clock, BarChart3, ArrowUpRight } from 'lucide-react';
 import { useEffect } from 'react';
 import Navbar from '../components/Navbar';
+import BrochureButton from '../components/BrochureButton';
 
 export default function TechnoArmPage() {
   const { t, i18n } = useTranslation();
@@ -54,6 +55,7 @@ export default function TechnoArmPage() {
 
       {/* Nav */}
       <Navbar />
+      <BrochureButton />
 
 
       {/* Hero */}

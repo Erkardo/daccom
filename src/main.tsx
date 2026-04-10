@@ -5,6 +5,7 @@ import App from './App.tsx';
 import TechnoArmPage from './pages/TechnoArmPage.tsx';
 import AirQPage from './pages/AirQPage.tsx';
 import MiningAIPage from './pages/MiningAIPage.tsx';
+import BrochurePage from './pages/BrochurePage.tsx';
 import './index.css';
 import './i18n/config';
 
@@ -24,6 +25,7 @@ function AppRouter() {
         <Route path="/techno-arm" element={<TechnoArmPage />} />
         <Route path="/airq" element={<AirQPage />} />
         <Route path="/mining-ai" element={<MiningAIPage />} />
+        <Route path="/brochure" element={<BrochurePage />} />
       </Routes>
     </BrowserRouter>
   );

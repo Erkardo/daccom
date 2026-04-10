@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, CheckCircle2, Cpu, Activity, Shield, TrendingDown, CircleDollarSign, Truck, HardHat, BarChart3, Wifi, Bell, Gauge, Eye, BrainCircuit, Database, Zap, Cog, Radio, Layers, AlertTriangle, Target, Clock, Users, Globe } from 'lucide-react';
 import { useEffect } from 'react';
 import Navbar from '../components/Navbar';
+import BrochureButton from '../components/BrochureButton';
 
 export default function MiningAIPage() {
   const { i18n } = useTranslation();
@@ -56,6 +57,7 @@ export default function MiningAIPage() {
 
       {/* Nav */}
       <Navbar />
+      <BrochureButton />
 
 
       {/* Hero */}
