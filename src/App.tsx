@@ -902,7 +902,11 @@ function TeamCard({ name, role, bio, image }: any) {
     >
       <div className="w-32 h-32 md:w-40 md:h-40 bg-brand-bg rounded-full mb-8 flex items-center justify-center border border-hairline group-hover:border-brand-teal transition-colors overflow-hidden mx-auto md:mx-0">
         {image ? (
-          <img src={image} alt={name} className="w-full h-full object-cover object-top grayscale group-hover:grayscale-0 transition-all duration-500" referrerPolicy="no-referrer" />
+          <img 
+            src={image} 
+            alt={name} 
+            className="w-full h-full object-cover object-top transition-all duration-500" 
+          />
         ) : (
           <span className="text-3xl font-heading text-brand-teal/30">{name[0]}</span>
         )}
