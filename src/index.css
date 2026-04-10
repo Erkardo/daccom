@@ -203,11 +203,23 @@
 /* Brochure Theme Overrides */
 .brochure-theme-light .brochure-page {
   background-color: var(--brochure-bg) !important;
+  background-image: none !important;
   color: var(--brochure-text) !important;
   border-color: var(--brochure-border) !important;
 }
 
-/* Text Overrides */
+.brochure-theme-light .brochure-page div,
+.brochure-theme-light .brochure-page .page-bg-gradient,
+.brochure-theme-light .brochure-page [class*="bg-gradient-"],
+.brochure-theme-light .brochure-page [class*="bg-[#0a0a0b]"] {
+  background-color: var(--brochure-bg) !important;
+  background-image: none !important;
+}
+/* More text overrides */
+.brochure-theme-light .brochure-page [class*="text-white"],
+.brochure-theme-light .brochure-page [class*="text-slate-"] {
+  color: var(--brochure-text-muted) !important;
+}
 .brochure-theme-light .brochure-page h1,
 .brochure-theme-light .brochure-page h2,
 .brochure-theme-light .brochure-page h3,
@@ -258,3 +270,11 @@
 .brochure-theme-light .brochure-page .bg-cyan-400 { background-color: #0891b2 !important; color: white !important; }
 .brochure-theme-light .brochure-page .bg-brand-teal { background-color: #0891b2 !important; color: white !important; }
 .brochure-theme-light .brochure-page .text-brand-teal { color: #0891b2 !important; }
+
+/* SVG visibility */
+.brochure-theme-light .brochure-page svg text {
+  fill: var(--brochure-text) !important;
+}
+.brochure-theme-light .brochure-page svg text[fill="#94A8BE"] {
+  fill: var(--brochure-text-muted) !important;
+}

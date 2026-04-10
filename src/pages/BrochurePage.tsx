@@ -10,20 +10,41 @@ export default function BrochurePage() {
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
   const [showShareModal, setShowShareModal] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [isPresenting, setIsPresenting] = useState(false);
+  const [currentPage, setCurrentPage] = useState(0);
+  const totalPages = 9;
 
-  useEffect(() => { window.scrollTo(0, 0); }, []);
+  useEffect(() => { 
+    window.scrollTo(0, 0); 
+  }, [isPresenting]);
+
+  // Keyboard navigation for presentation mode
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!isPresenting) return;
+      if (e.key === 'ArrowRight' || e.key === ' ') {
+        setCurrentPage(prev => Math.min(prev + 1, totalPages - 1));
+      } else if (e.key === 'ArrowLeft') {
+        setCurrentPage(prev => Math.max(prev - 1, 0));
+      } else if (e.key === 'Escape') {
+        setIsPresenting(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isPresenting]);
 
   const handlePrint = () => {
     window.print();
   };
 
-  const toggleFullScreen = () => {
+  const togglePresentation = () => {
+    setIsPresenting(!isPresenting);
+    setCurrentPage(0);
     if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen();
+      document.documentElement.requestFullscreen().catch(() => {});
     } else {
-      if (document.exitFullscreen) {
-        document.exitFullscreen();
-      }
+      document.exitFullscreen().catch(() => {});
     }
   };
 
@@ -54,9 +75,9 @@ export default function BrochurePage() {
               {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
             </button>
             <button 
-              onClick={toggleFullScreen}
+              onClick={togglePresentation}
               className={`p-2 rounded-lg transition-all ${theme === 'dark' ? 'hover:bg-white/5 text-white/40 hover:text-cyan-400' : 'hover:bg-slate-100 text-slate-400 hover:text-cyan-600'}`}
-              title="Fullscreen Presentation"
+              title="Presentation Mode"
             >
               <Maximize2 size={18} />
             </button>
@@ -128,13 +149,67 @@ export default function BrochurePage() {
         </div>
       )}
 
+      {/* Presentation Controls */}
+      {isPresenting && (
+        <>
+          <div className="fixed top-8 right-8 z-[200] flex items-center gap-4">
+            <button 
+              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+              className="p-3 bg-black/40 backdrop-blur-md rounded-full text-white/60 hover:text-white transition-colors border border-white/10"
+            >
+              {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+            </button>
+            <button 
+              onClick={() => {
+                setIsPresenting(false);
+                if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+              }}
+              className="p-3 bg-black/40 backdrop-blur-md rounded-full text-white/60 hover:text-white transition-colors border border-white/10"
+            >
+              <X size={20} />
+            </button>
+          </div>
+
+          <button 
+            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 0))}
+            className={`fixed left-8 top-1/2 -translate-y-1/2 z-[150] p-4 bg-black/20 hover:bg-black/40 backdrop-blur-md rounded-full text-white/40 hover:text-white transition-all border border-white/5 ${currentPage === 0 ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+          >
+            <ArrowLeft size={24} />
+          </button>
+
+          <button 
+            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages - 1))}
+            className={`fixed right-8 top-1/2 -translate-y-1/2 z-[150] p-4 bg-black/20 hover:bg-black/40 backdrop-blur-md rounded-full text-white/40 hover:text-white transition-all border border-white/5 ${currentPage === totalPages - 1 ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+          >
+            <ArrowRight size={24} />
+          </button>
+
+          <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-[150] flex items-center gap-2 px-4 py-2 bg-black/40 backdrop-blur-md rounded-full border border-white/10">
+            {Array.from({ length: totalPages }).map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setCurrentPage(i)}
+                className={`w-2 h-2 rounded-full transition-all ${currentPage === i ? 'bg-cyan-400 w-6' : 'bg-white/20 hover:bg-white/40'}`}
+              />
+            ))}
+          </div>
+        </>
+      )}
+
       {/* Brochure content */}
-      <div ref={brochureRef} className="brochure-content pt-20 print:pt-0">
+      <div 
+        ref={brochureRef} 
+        className={`brochure-content transition-all duration-500 ${!isPresenting ? 'pt-20 print:pt-0' : 'h-screen w-screen overflow-hidden'}`}
+      >
+        <div 
+          className={`transition-transform duration-700 ease-in-out ${isPresenting ? 'flex h-screen w-screen' : 'flex flex-col items-center space-y-8 pb-32'}`}
+          style={isPresenting ? { transform: `translateX(-${currentPage * 100}%)`, width: `${totalPages * 100}%` } : {}}
+        >
 
         {/* ═══════════════════════════════════════════════════════════════ */}
-        {/* PAGE 1: COVER */}
-        {/* ═══════════════════════════════════════════════════════════════ */}
-        <div className="brochure-page bg-gradient-to-br from-[#0a0a0b] via-[#0d1117] to-[#0a0a0b] relative overflow-hidden flex items-center justify-center">
+            {/* PAGE 1: COVER */}
+            <div className={`brochure-page relative shrink-0 overflow-hidden flex items-center justify-center ${isPresenting ? 'w-screen h-screen border-none rounded-none' : 'shadow-xl shadow-cyan-900/10'}`}>
+              <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0b] via-[#0d1117] to-[#0a0a0b] page-bg-gradient transition-all duration-700" />
           {/* Background elements */}
           <div className="absolute inset-0">
             <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-cyan-400/5 rounded-full blur-[150px]" />
@@ -208,7 +283,7 @@ export default function BrochurePage() {
         {/* ═══════════════════════════════════════════════════════════════ */}
         {/* PAGE 2: ABOUT US */}
         {/* ═══════════════════════════════════════════════════════════════ */}
-        <div className="brochure-page bg-[#0a0a0b] relative overflow-hidden px-12 py-16 flex flex-col justify-between">
+        <div className={`brochure-page relative shrink-0 bg-[#0a0a0b] px-12 py-16 flex flex-col justify-between ${isPresenting ? 'w-screen h-screen border-none rounded-none' : 'shadow-xl shadow-cyan-900/10'}`}>
           <div>
             <div className="flex items-center gap-3 mb-8">
               <div className="w-8 h-[1px] bg-cyan-400" />
@@ -267,7 +342,7 @@ export default function BrochurePage() {
         {/* ═══════════════════════════════════════════════════════════════ */}
         {/* PAGE 3: TECHNO-ARM */}
         {/* ═══════════════════════════════════════════════════════════════ */}
-        <div className="brochure-page bg-[#0a0a0b] relative overflow-hidden px-12 py-16 flex flex-col justify-between">
+        <div className={`brochure-page relative shrink-0 bg-[#0a0a0b] px-12 py-16 flex flex-col justify-between ${isPresenting ? 'w-screen h-screen border-none rounded-none' : 'shadow-xl shadow-cyan-900/10'}`}>
           <div>
             <div className="flex items-center gap-3 mb-8">
               <div className="w-8 h-[1px] bg-cyan-400" />
@@ -379,7 +454,7 @@ export default function BrochurePage() {
         {/* ═══════════════════════════════════════════════════════════════ */}
         {/* PAGE 4: AIRQ */}
         {/* ═══════════════════════════════════════════════════════════════ */}
-        <div className="brochure-page bg-[#0a0a0b] relative overflow-hidden px-12 py-16 flex flex-col justify-between">
+        <div className={`brochure-page relative shrink-0 bg-[#0a0a0b] px-12 py-16 flex flex-col justify-between ${isPresenting ? 'w-screen h-screen border-none rounded-none' : 'shadow-xl shadow-cyan-900/10'}`}>
           <div>
             <div className="flex items-center gap-3 mb-8">
               <div className="w-8 h-[1px] bg-purple-400" />
@@ -461,7 +536,7 @@ export default function BrochurePage() {
         {/* ═══════════════════════════════════════════════════════════════ */}
         {/* PAGE 5: MINING AI */}
         {/* ═══════════════════════════════════════════════════════════════ */}
-        <div className="brochure-page bg-[#0a0a0b] relative overflow-hidden px-12 py-16 flex flex-col justify-between">
+        <div className={`brochure-page relative shrink-0 bg-[#0a0a0b] px-12 py-16 flex flex-col justify-between ${isPresenting ? 'w-screen h-screen border-none rounded-none' : 'shadow-xl shadow-cyan-900/10'}`}>
           <div>
             <div className="flex items-center gap-3 mb-8">
               <div className="w-8 h-[1px] bg-orange-400" />
@@ -552,9 +627,9 @@ export default function BrochurePage() {
         </div>
 
         {/* ═══════════════════════════════════════════════════════════════ */}
-        {/* PAGE 6: RESEARCH & INNOVATION */}
+        {/* PAGE 6: RESEARCH */}
         {/* ═══════════════════════════════════════════════════════════════ */}
-        <div className="brochure-page bg-[#0a0a0b] relative overflow-hidden px-12 py-16 flex flex-col justify-between">
+        <div className={`brochure-page relative shrink-0 bg-[#0a0a0b] px-12 py-16 flex flex-col justify-between ${isPresenting ? 'w-screen h-screen border-none rounded-none' : 'shadow-xl shadow-cyan-900/10'}`}>
           <div>
             <div className="flex items-center gap-3 mb-8">
               <div className="w-8 h-[1px] bg-cyan-400" />
@@ -611,9 +686,9 @@ export default function BrochurePage() {
         </div>
 
         {/* ═══════════════════════════════════════════════════════════════ */}
-        {/* PAGE 7: PARTNERSHIP PATHWAY */}
+        {/* PAGE 7: PARTNERSHIP */}
         {/* ═══════════════════════════════════════════════════════════════ */}
-        <div className="brochure-page bg-[#0a0a0b] relative overflow-hidden px-12 py-16 flex flex-col justify-between">
+        <div className={`brochure-page relative shrink-0 bg-[#0a0a0b] px-12 py-16 flex flex-col justify-between ${isPresenting ? 'w-screen h-screen border-none rounded-none' : 'shadow-xl shadow-cyan-900/10'}`}>
           <div>
             <div className="flex items-center gap-3 mb-8">
               <div className="w-8 h-[1px] bg-brand-teal" />
@@ -656,9 +731,9 @@ export default function BrochurePage() {
         </div>
 
         {/* ═══════════════════════════════════════════════════════════════ */}
-        {/* PAGE 8: FAQ & RELIABILITY */}
+        {/* PAGE 8: RELIABILITY */}
         {/* ═══════════════════════════════════════════════════════════════ */}
-        <div className="brochure-page bg-[#0a0a0b] relative overflow-hidden px-12 py-16 flex flex-col justify-between">
+        <div className={`brochure-page relative shrink-0 bg-[#0a0a0b] px-12 py-16 flex flex-col justify-between ${isPresenting ? 'w-screen h-screen border-none rounded-none' : 'shadow-xl shadow-cyan-900/10'}`}>
           <div>
             <div className="flex items-center gap-3 mb-8">
               <div className="w-8 h-[1px] bg-cyan-400" />
@@ -718,9 +793,9 @@ export default function BrochurePage() {
         </div>
 
         {/* ═══════════════════════════════════════════════════════════════ */}
-        {/* PAGE 9: TEAM & CONTACT */}
+        {/* PAGE 9: TEAM */}
         {/* ═══════════════════════════════════════════════════════════════ */}
-        <div className="brochure-page bg-gradient-to-br from-[#0a0a0b] via-[#0d1117] to-[#0a0a0b] relative overflow-hidden px-12 py-16 flex flex-col justify-between">
+        <div className={`brochure-page relative shrink-0 px-12 py-16 flex flex-col justify-between ${isPresenting ? 'w-screen h-screen border-none rounded-none bg-gradient-to-br from-[#0a0a0b] via-[#0d1117] to-[#0a0a0b]' : 'shadow-xl shadow-cyan-900/10 bg-gradient-to-br from-[#0a0a0b] via-[#0d1117] to-[#0a0a0b]'}`}>
           <div>
             <div className="flex items-center gap-3 mb-8">
               <div className="w-8 h-[1px] bg-cyan-400" />
@@ -800,7 +875,8 @@ export default function BrochurePage() {
                 <text x="352" y="158" fill="#EDE9DF" style={{ fontFamily: 'Manrope, sans-serif', fontSize: '41px', fontWeight: 800 }}>DACCOM</text>
                 <text x="354" y="183" fill="#94A8BE" style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '11px', fontWeight: 500 }}>PARTNERS</text>
               </svg>
-            <p className="font-mono text-[8px] text-white/15">09</p>
+              <p className="font-mono text-[8px] text-white/15">09</p>
+            </div>
           </div>
         </div>
       </div>
