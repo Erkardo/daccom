@@ -620,19 +620,19 @@ export default function App() {
                     <div className="w-10 h-10 rounded-full bg-brand-bg flex items-center justify-center border border-hairline">
                       <Mail size={18} className="text-brand-teal" />
                     </div>
-                    <span>info@daccom.mn</span>
+                    <span>info@daccompartners.com</span>
                   </div>
                   <div className="flex items-center gap-4 text-brand-paper">
                     <div className="w-10 h-10 rounded-full bg-brand-bg flex items-center justify-center border border-hairline">
                       <Phone size={18} className="text-brand-teal" />
                     </div>
-                    <span>+976 7700 0000</span>
+                    <span>+976 99096183</span>
                   </div>
                   <div className="flex items-center gap-4 text-brand-paper">
                     <div className="w-10 h-10 rounded-full bg-brand-bg flex items-center justify-center border border-hairline">
                       <MapPin size={18} className="text-brand-teal" />
                     </div>
-                    <span>Улаанбаатар, Монгол</span>
+                    <span>УБ, Сүхбаатар дүүрэг, 8-р хороо, МТҮП, 112 тоот</span>
                   </div>
                 </div>
               </div>
@@ -706,8 +706,8 @@ export default function App() {
             </div>
             <div className="col-span-2 md:col-span-1">
               <h4 className="font-mono text-[10px] text-white mb-8 tracking-[0.2em]">Холбоо барих</h4>
-              <p className="text-brand-chalk text-sm font-light mb-4">Улаанбаатар, Монгол</p>
-              <p className="text-brand-paper text-sm font-medium">info@daccom.mn</p>
+              <p className="text-brand-chalk text-sm font-light mb-4 text-balance">Монгол Улс, Улаанбаатар, Сүхбаатар дүүрэг, 8-р хороо, МТҮП, 112 тоот</p>
+              <p className="text-brand-paper text-sm font-medium">info@daccompartners.com</p>
             </div>
           </div>
         </div>
