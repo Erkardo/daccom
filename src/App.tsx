@@ -4,10 +4,12 @@
  */
 
 import { motion, useScroll, useSpring, useMotionValue, useTransform, AnimatePresence } from "motion/react";
-import { Landmark, Settings, Brain, Zap, Globe, ArrowUpRight, ChevronRight, Play, Cpu, Shield, BarChart3, Rocket, Users, MessageSquare, Mail, Phone, MapPin, CheckCircle2, Trophy, Plane, Building2, Key, Wind, Activity, HardHat, BedDouble, Facebook, Twitter, Linkedin, Instagram } from "lucide-react";
+import { Landmark, Settings, Brain, Zap, Globe, ArrowUpRight, ChevronRight, Play, Cpu, Shield, BarChart3, Rocket, Users, MessageSquare, Mail, Phone, MapPin, CheckCircle2, Trophy, Plane, Building2, Key, Wind, Activity, HardHat, BedDouble, Facebook, Twitter, Linkedin, Instagram, Languages } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function App() {
+  const { t, i18n } = useTranslation();
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
@@ -74,7 +76,7 @@ export default function App() {
                 transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
                 className="w-5 h-5 border-2 border-brand-teal border-t-transparent rounded-full"
               />
-              <span className="font-mono text-[10px] text-brand-teal tracking-[0.3em] uppercase">Системийг ачаалж байна...</span>
+              <span className="font-mono text-[10px] text-brand-teal tracking-[0.3em] uppercase">{t('loading')}</span>
             </div>
           </motion.div>
         )}
@@ -121,15 +123,16 @@ export default function App() {
         <div className="flex items-center gap-10">
           <Logo />
           <div className="hidden lg:flex items-center gap-8">
-            <a href="#services" className="font-mono text-[10px] text-brand-chalk hover:text-brand-teal transition-colors tracking-[0.2em]">ҮЙЛЧИЛГЭЭ</a>
-            <a href="#projects" className="font-mono text-[10px] text-brand-chalk hover:text-brand-teal transition-colors tracking-[0.2em]">ТӨСЛҮҮД</a>
-            <a href="#products" className="font-mono text-[10px] text-brand-chalk hover:text-brand-teal transition-colors tracking-[0.2em]">БҮТЭЭГДЭХҮҮН</a>
-            <a href="#about" className="font-mono text-[10px] text-brand-chalk hover:text-brand-teal transition-colors tracking-[0.2em]">БИДНИЙ ТУХАЙ</a>
+            <a href="#services" className="font-mono text-[10px] text-brand-chalk hover:text-brand-teal transition-colors tracking-[0.2em]">{t('nav.services')}</a>
+            <a href="#projects" className="font-mono text-[10px] text-brand-chalk hover:text-brand-teal transition-colors tracking-[0.2em]">{t('nav.projects')}</a>
+            <a href="#products" className="font-mono text-[10px] text-brand-chalk hover:text-brand-teal transition-colors tracking-[0.2em]">{t('nav.products')}</a>
+            <a href="#about" className="font-mono text-[10px] text-brand-chalk hover:text-brand-teal transition-colors tracking-[0.2em]">{t('nav.about')}</a>
           </div>
         </div>
         <div className="flex items-center gap-6">
+          <LanguageSwitcher />
           <a href="#contact" className="btn-outline py-2.5 px-6 text-[10px] hover:bg-brand-teal hover:text-brand-bg hover:border-brand-teal">
-            Холбоо барих
+            {t('nav.contact')}
           </a>
         </div>
       </nav>
@@ -145,21 +148,21 @@ export default function App() {
             >
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-brand-teal/20 bg-brand-teal/5 mb-8">
                 <span className="w-1.5 h-1.5 rounded-full bg-brand-teal animate-pulse" />
-                <span className="font-mono text-[9px] text-brand-teal">Deep Tech Innovation 2026</span>
+                <span className="font-mono text-[9px] text-brand-teal">{t('hero.tagline')}</span>
               </div>
               <h1 className="text-6xl md:text-8xl lg:text-[7.5rem] mb-10 text-gradient">
-                Ирээдүйг <br />
-                <span className="text-brand-teal italic font-serif font-normal">автоматжуулна</span>
+                {t('hero.title_part1')} <br />
+                <span className="text-brand-teal italic font-serif font-normal">{t('hero.title_part2')}</span>
               </h1>
               <p className="text-xl md:text-2xl text-brand-chalk max-w-2xl mb-12 font-light leading-relaxed">
-                Мехатроник, хиймэл оюун ухаан болон роботын технологийг нэгтгэсэн Монголын анхны гүн технологийн платформ.
+                {t('hero.description')}
               </p>
               <div className="flex flex-wrap gap-6">
                 <a href="#services" className="px-8 py-4 bg-brand-teal text-brand-bg rounded-full font-mono text-[11px] font-bold flex items-center gap-3 hover:bg-white transition-all group shadow-[0_0_30px_rgba(6,182,212,0.3)] hover:shadow-[0_0_40px_rgba(255,255,255,0.4)]">
-                  Хамтран ажиллах <ArrowUpRight size={16} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                  {t('hero.cta_collaborate')} <ArrowUpRight size={16} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                 </a>
                 <a href="#projects" className="px-8 py-4 border border-brand-teal/30 rounded-full font-mono text-[11px] flex items-center gap-3 hover:bg-brand-teal/10 transition-all">
-                  Төслүүдтэй танилцах
+                  {t('hero.cta_projects')}
                 </a>
               </div>
             </motion.div>
@@ -172,7 +175,7 @@ export default function App() {
         {/* Trusted By Marquee */}
         <div className="mt-32 pt-20 border-t border-hairline overflow-hidden relative">
           <p className="font-mono text-[9px] text-brand-chalk/60 text-center mb-12 tracking-[0.4em] uppercase">
-            Бидэнд итгэж хамтран ажилладаг байгууллагууд
+            {t('trusted_by')}
           </p>
           <div className="flex whitespace-nowrap animate-marquee">
             {[...Array(2)].map((_, i) => (
@@ -203,10 +206,10 @@ export default function App() {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(6,182,212,0.05)_0%,transparent_70%)] pointer-events-none" />
         <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-12 relative z-10">
           {[
-            { label: "Хэрэгжүүлсэн төсөл", val: "45+" },
-            { label: "Инженерүүдийн баг", val: "20+" },
-            { label: "Хэмнэсэн зардал", val: "35%" },
-            { label: "Технологийн патент", val: "12" }
+            { label: t('stats.projects'), val: "45+" },
+            { label: t('stats.engineers'), val: "20+" },
+            { label: t('stats.savings'), val: "35%" },
+            { label: t('stats.patents'), val: "12" }
           ].map((stat, i) => (
             <motion.div 
               key={i}
@@ -228,9 +231,9 @@ export default function App() {
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-accent/5 blur-[100px] rounded-full pointer-events-none" />
         <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-16 items-center relative z-10">
           <div className="lg:w-1/2">
-            <h2 className="text-4xl md:text-5xl mb-6">Үндсэн <span className="text-brand-teal italic font-serif font-normal">технологиуд</span></h2>
+            <h2 className="text-4xl md:text-5xl mb-6">{t('tech.title')} <span className="text-brand-teal italic font-serif font-normal">{t('tech.title_italic')}</span></h2>
             <p className="text-brand-chalk font-light leading-relaxed mb-8">
-              Бид дэлхийн жишигт нийцсэн, хамгийн сүүлийн үеийн технологийн стекийг ашиглан найдвартай, өндөр хүчин чадалтай системүүдийг хөгжүүлдэг.
+              {t('tech.description')}
             </p>
             <div className="flex flex-wrap gap-3">
               {["C++ / Rust", "Python / TensorFlow", "ROS 2", "Computer Vision", "PLC / SCADA", "IoT / LoRaWAN", "Edge Computing", "Digital Twin"].map(tech => (
@@ -273,14 +276,14 @@ export default function App() {
             <div className="max-w-2xl">
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-8 h-[1px] bg-brand-teal" />
-                <span className="font-mono text-[10px] text-brand-teal">Үйл ажиллагаа</span>
+                <span className="font-mono text-[10px] text-brand-teal">{t('services.badge')}</span>
               </div>
               <h2 className="text-5xl md:text-7xl">
-                Технологийн <br /> цогц <span className="text-brand-accent italic font-normal">экосистем</span>
+                {t('services.title')} <br /> {t('services.title_italic_before')} <span className="text-brand-accent italic font-normal">{t('services.title_italic')}</span>
               </h2>
             </div>
             <p className="text-brand-chalk text-lg max-w-md font-light">
-              Бид зөвхөн программ хангамж биш, техник хангамж болон AI-г хослуулсан бодит шийдлүүдийг бүтээдэг.
+              {t('services.description')}
             </p>
           </div>
 
@@ -288,29 +291,29 @@ export default function App() {
             {[
               {
                 className: "md:col-span-8 h-[400px]",
-                title: "Үйлдвэрлэлийн Автоматжуулалт",
-                desc: "Робот гар, PLC удирдлага болон мехатроникийн нарийн шийдлүүд.",
+                title: t('services.industrial.title'),
+                desc: t('services.industrial.desc'),
                 icon: <Settings size={40} />,
                 visual: <div className="absolute inset-0 grid-pattern opacity-20" />
               },
               {
                 className: "md:col-span-4 h-[400px]",
-                title: "AI Vision",
-                desc: "Компьютер харааны тусламжтай чанарын хяналт.",
+                title: t('services.vision.title'),
+                desc: t('services.vision.desc'),
                 icon: <Brain size={40} />,
                 color: "teal"
               },
               {
                 className: "md:col-span-4 h-[400px]",
-                title: "IoT Systems",
-                desc: "Бодит цагийн өгөгдөл цуглуулах, хянах систем.",
+                title: t('services.iot.title'),
+                desc: t('services.iot.desc'),
                 icon: <Globe size={40} />,
                 color: "accent"
               },
               {
                 className: "md:col-span-8 h-[400px]",
-                title: "Predictive Maintenance",
-                desc: "Хиймэл оюун ухаанаар эвдрэлийг урьдчилан таамаглах.",
+                title: t('services.maintenance.title'),
+                desc: t('services.maintenance.desc'),
                 icon: <BarChart3 size={40} />,
                 visual: <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-brand-accent/10 to-transparent" />
               }
@@ -332,14 +335,14 @@ export default function App() {
           <div className="mb-20">
             <div className="flex items-center gap-3 mb-6">
               <div className="w-8 h-[1px] bg-brand-teal" />
-              <span className="font-mono text-[10px] text-brand-teal uppercase tracking-widest">Амжилтын түүх</span>
+              <span className="font-mono text-[10px] text-brand-teal uppercase tracking-widest">{t('projects.badge')}</span>
             </div>
             <h2 className="text-4xl md:text-6xl mb-6">
-              Бидний хэрэгжүүлсэн <br />
-              <span className="text-brand-teal italic font-serif font-normal">онцлох төслүүд</span>
+              {t('projects.title')} <br />
+              <span className="text-brand-teal italic font-serif font-normal">{t('projects.title_italic')}</span>
             </h2>
             <p className="text-brand-chalk max-w-2xl font-light leading-relaxed">
-              Зах зээлд амжилттай нэвтэрсэн дижитал платформуудаас эхлээд, салбартаа тэргүүлэгч гүн технологийн инновациуд.
+              {t('projects.description')}
             </p>
           </div>
 
@@ -354,13 +357,13 @@ export default function App() {
               <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
               <div className="absolute top-0 right-0 p-6 md:p-8">
                 <div className="flex items-center gap-2 px-4 py-2 bg-yellow-500/10 text-yellow-400 rounded-full border border-yellow-500/20 font-mono text-[10px] uppercase tracking-wider">
-                  <Trophy size={14} /> 2025 Шилдэг Инноваци
+                  <Trophy size={14} /> {t('projects.award')}
                 </div>
               </div>
               <Wind size={48} className="text-brand-paper mb-8" />
-              <h3 className="text-3xl font-heading mb-4 text-white">AirQ</h3>
+              <h3 className="text-3xl font-heading mb-4 text-white">{t('projects.airq.title')}</h3>
               <p className="text-brand-chalk font-light leading-relaxed max-w-md">
-                Агаарын чанарыг бодит цагт хянах, дүн шинжилгээ хийх, урьдчилан сэргийлэх ухаалаг IoT систем.
+                {t('projects.airq.desc')}
               </p>
             </motion.div>
 
@@ -374,13 +377,13 @@ export default function App() {
               <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
               <div className="absolute top-0 right-0 p-6 md:p-8">
                 <div className="flex items-center gap-2 px-4 py-2 bg-yellow-500/10 text-yellow-400 rounded-full border border-yellow-500/20 font-mono text-[10px] uppercase tracking-wider">
-                  <Trophy size={14} /> 2025 Шилдэг Инноваци
+                  <Trophy size={14} /> {t('projects.award')}
                 </div>
               </div>
               <Cpu size={48} className="text-brand-paper mb-8" />
-              <h3 className="text-3xl font-heading mb-4 text-white">Techno Arm</h3>
+              <h3 className="text-3xl font-heading mb-4 text-white">{t('projects.techno_arm.title')}</h3>
               <p className="text-brand-chalk font-light leading-relaxed max-w-md">
-                Үйлдвэрлэлийн процессыг автоматжуулах өндөр нарийвчлалтай, ухаалаг робот гарын шийдэл.
+                {t('projects.techno_arm.desc')}
               </p>
             </motion.div>
           </div>
@@ -388,10 +391,10 @@ export default function App() {
           {/* Digital Platforms */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-6">
             {[
-              { name: "iTrip.mn", logo: "https://www.google.com/s2/favicons?domain=itrip.mn&sz=128", desc: "Аяллын платформ" },
-              { name: "iHotel.mn", logo: "https://www.google.com/s2/favicons?domain=ihotel.mn&sz=128", desc: "Зочид буудлын захиалга" },
-              { name: "xRoom.mn", logo: "https://www.google.com/s2/favicons?domain=xroom.mn&sz=128", desc: "Өрөө түрээсийн систем" },
-              { name: "MyHotel.mn", logo: "https://www.google.com/s2/favicons?domain=ihotel.mn&sz=128", desc: "Буудлын менежмент" }
+              { name: "iTrip.mn", logo: "https://www.google.com/s2/favicons?domain=itrip.mn&sz=128", desc: t('projects.itrip') },
+              { name: "iHotel.mn", logo: "https://www.google.com/s2/favicons?domain=ihotel.mn&sz=128", desc: t('projects.ihotel') },
+              { name: "xRoom.mn", logo: "https://www.google.com/s2/favicons?domain=xroom.mn&sz=128", desc: t('projects.xroom') },
+              { name: "MyHotel.mn", logo: "https://www.google.com/s2/favicons?domain=ihotel.mn&sz=128", desc: t('projects.myhotel') }
             ].map((brand, i) => (
               <motion.div 
                 key={brand.name}
@@ -422,11 +425,11 @@ export default function App() {
             <div className="absolute inset-0 bg-gradient-to-r from-brand-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
             <div className="flex-1 relative z-10">
               <div className="inline-flex items-center gap-2 px-4 py-2 bg-brand-accent/10 text-brand-accent rounded-full border border-brand-accent/20 font-mono text-[10px] uppercase tracking-wider mb-6">
-                <Activity size={14} /> Хөгжүүлэлтийн шатанд
+                <Activity size={14} /> {t('projects.mining.badge')}
               </div>
-              <h3 className="text-3xl md:text-4xl font-heading mb-4 text-white">Уул уурхайн урьдчилан таамаглах хиймэл оюун</h3>
+              <h3 className="text-3xl md:text-4xl font-heading mb-4 text-white">{t('projects.mining.title')}</h3>
               <p className="text-brand-chalk text-lg font-light leading-relaxed max-w-2xl">
-                Уул уурхайн хүнд машин механизм, тоног төхөөрөмжийн эвдрэлийг урьдчилан таамаглаж, сул зогсолтоос сэргийлэх AI болон IoT-д суурилсан цогц шийдэл.
+                {t('projects.mining.desc')}
               </p>
             </div>
             <div className="w-full md:w-1/3 aspect-video bg-brand-bg rounded-2xl border border-hairline relative overflow-hidden flex items-center justify-center shadow-inner">
@@ -442,7 +445,7 @@ export default function App() {
                   <div className="w-12 h-1 bg-brand-accent/40 rounded-full" />
                   <div className="w-8 h-1 bg-brand-accent/40 rounded-full" />
                 </div>
-                <div className="font-mono text-[8px] text-brand-accent/60">ANALYZING...</div>
+                <div className="font-mono text-[8px] text-brand-accent/60 uppercase">{t('projects.mining.analyzing')}</div>
               </div>
             </div>
           </motion.div>
@@ -454,25 +457,25 @@ export default function App() {
         <div className="max-w-7xl mx-auto">
           <ProductSection 
             number="01"
-            tag="Robotics"
-            title="Техно-Гар"
-            desc="Автомашин угаалгын ухаалаг робот систем. Хүний оролцоогүйгээр 3D сканер ашиглан чанартай угаалга гүйцэтгэнэ."
+            tag={t('products.techno_arm.tag')}
+            title={t('products.techno_arm.title')}
+            desc={t('products.techno_arm.desc')}
             metrics={[
-              { label: "Угаалгын хугацаа", val: "8-12 мин" },
-              { label: "Ус хэмнэлт", val: "70%" },
-              { label: "Нарийвчлал", val: "99.9%" }
+              { label: t('products.techno_arm.metric1'), val: t('products.techno_arm.metric1_val') },
+              { label: t('products.techno_arm.metric2'), val: t('products.techno_arm.metric2_val') },
+              { label: t('products.techno_arm.metric3'), val: t('products.techno_arm.metric3_val') }
             ]}
             visual={<RobotVisual />}
           />
           <ProductSection 
             number="02"
-            tag="IoT & Health"
-            title="AirQ"
-            desc="Дотоод орчны агаарын чанарыг хянах, автоматаар агааржуулалтыг удирдах ухаалаг IoT систем."
+            tag={t('products.airq.tag')}
+            title={t('products.airq.title')}
+            desc={t('products.airq.desc')}
             metrics={[
-              { label: "Мэдрэгч", val: "CO2, PM2.5" },
-              { label: "Холболт", val: "WiFi/LoRa" },
-              { label: "Бүтээмж", val: "+25%" }
+              { label: t('products.airq.metric1'), val: t('products.airq.metric1_val') },
+              { label: t('products.airq.metric2'), val: t('products.airq.metric2_val') },
+              { label: t('products.airq.metric3'), val: t('products.airq.metric3_val') }
             ]}
             visual={<AirQVisual />}
             reverse
@@ -487,16 +490,16 @@ export default function App() {
             <div>
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-8 h-[1px] bg-brand-teal" />
-                <span className="font-mono text-[10px] text-brand-teal">Ажлын явц</span>
+                <span className="font-mono text-[10px] text-brand-teal">{t('process.badge')}</span>
               </div>
               <h2 className="text-5xl md:text-7xl mb-12">
-                Санааг <span className="text-brand-accent italic font-serif font-normal">бодит</span> <br /> болгох зам
+                {t('process.title')} <span className="text-brand-accent italic font-serif font-normal">{t('process.title_italic')}</span> <br /> {t('process.title_end')}
               </h2>
               <div className="space-y-12">
                 {[
-                  { title: "Судалгаа ба Төлөвлөлт", desc: "Асуудлыг гүнзгий судалж, хамгийн оновчтой технологийн шийдлийг боловсруулна." },
-                  { title: "Прототайп Хөгжүүлэлт", desc: "Шийдлийн анхны хувилбарыг техник болон программ хангамжийн түвшинд туршина." },
-                  { title: "Үйлдвэрлэл ба Нэвтрүүлэлт", desc: "Бэлэн болсон системийг бодит орчинд суурилуулж, автоматжуулалтыг эхлүүлнэ." }
+                  { title: t('process.step1.title'), desc: t('process.step1.desc') },
+                  { title: t('process.step2.title'), desc: t('process.step2.desc') },
+                  { title: t('process.step3.title'), desc: t('process.step3.desc') }
                 ].map((step, i) => (
                   <motion.div 
                     key={i}
@@ -528,8 +531,8 @@ export default function App() {
                   >
                     <Rocket size={64} className="text-brand-teal" />
                   </motion.div>
-                  <p className="text-3xl font-heading mb-4">Хурдтай хөгжүүлэлт</p>
-                  <p className="text-brand-chalk font-light">Бид Agile арга барилаар <br /> хамгийн богино хугацаанд үр дүнд хүрдэг.</p>
+                  <p className="text-3xl font-heading mb-4">{t('process.speed.title')}</p>
+                  <p className="text-brand-chalk font-light">{t('process.speed.desc').split('<br />').map((line: string, i: number) => (<span key={i}>{line}<br /></span>))}</p>
                 </div>
               </div>
               {/* Decorative elements */}
@@ -544,28 +547,28 @@ export default function App() {
       <section className="py-32 px-6 md:px-12 lg:px-24 bg-brand-bg-secondary">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-24">
-            <h2 className="text-5xl md:text-7xl mb-8">Удирдлагын <span className="italic font-normal text-brand-teal">баг</span></h2>
+            <h2 className="text-5xl md:text-7xl mb-8">{t('team.title')} <span className="italic font-normal text-brand-teal">{t('team.title_italic')}</span></h2>
             <p className="text-brand-chalk text-xl max-w-2xl mx-auto font-light">
-              Шинжлэх ухааны доктор, технологийн экспертүүд болон бизнесийн стратегичдын нэгдэл.
+              {t('team.description')}
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <TeamCard 
-              name="Д-р Р. Амартүвшин"
-              role="CTO · Ph.D"
-              bio="Япон улсад мехатроник, роботикийн чиглэлээр Ph.D хамгаалсан. МУИС-ийн дэд профессор бөгөөд Монгол дахь роботикийн хөгжилд тэргүүлэх үүрэгтэй оролцож буй эрдэмтэн."
+              name={t('team.member1.name')}
+              role={t('team.member1.role')}
+              bio={t('team.member1.bio')}
               image="/amartuvshin.jpg"
             />
             <TeamCard 
-              name="С. Эрдэнэбат"
-              role="CEO"
-              bio="Стартап Монгол ТББ-ын үүсгэн байгуулагч, технологийн энтрепренер. Стратеги, хөрөнгө оруулалт болон стартап экосистемийн хөгжилд үнэтэй хувь нэмэр оруулж буй эксперт."
+              name={t('team.member2.name')}
+              role={t('team.member2.role')}
+              bio={t('team.member2.bio')}
               image="/erdenebat.jpg"
             />
             <TeamCard 
-              name="Ц. Мөнхцогт"
-              role="CPO"
-              bio="UBCab болон Mongol Computing LLC-ийг үүсгэн байгуулагч. Компьютерын инженер мэргэжилтэй, технологийн салбарт 10 гаруй жил ажилласан, бүтээгдэхүүн хөгжүүлэлтийн арвин туршлагатай."
+              name={t('team.member3.name')}
+              role={t('team.member3.role')}
+              bio={t('team.member3.bio')}
               image="/munkhtsogt.jpg"
             />
           </div>
@@ -586,7 +589,7 @@ export default function App() {
             transition={{ duration: 1 }}
             className="text-3xl md:text-5xl lg:text-6xl font-serif italic font-medium leading-tight mb-12 text-brand-bg"
           >
-            "Технологи бол зөвхөн хэрэгсэл биш, харин Монгол улсын аж үйлдвэрийн ирээдүйг тодорхойлох хамгийн хүчирхэг хөдөлгүүр юм."
+            "{t('quote.text')}"
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0 }}
@@ -595,7 +598,7 @@ export default function App() {
             transition={{ delay: 0.5, duration: 1 }}
             className="font-mono text-xs uppercase tracking-[0.3em] font-bold text-brand-bg/80"
           >
-            — Daccom Partners
+            {t('quote.author')}
           </motion.p>
         </div>
       </section>
@@ -610,10 +613,10 @@ export default function App() {
             <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
               <div>
                 <h2 className="text-5xl md:text-7xl mb-8">
-                  Төслөө <span className="text-brand-teal italic font-serif font-normal">эхлүүлэхэд</span> <br /> бэлэн үү?
+                  {t('contact.title')} <span className="text-brand-teal italic font-serif font-normal">{t('contact.title_italic')}</span> <br /> {t('contact.title_end')}
                 </h2>
                 <p className="text-xl text-brand-chalk mb-12 font-light leading-relaxed">
-                  Бид таны бизнесийн онцлогт тохирсон технологийн шийдлийг боловсруулж, ирээдүйн өрсөлдөх чадварыг нэмэгдүүлнэ.
+                  {t('contact.description')}
                 </p>
                 <div className="space-y-6">
                   <div className="flex items-center gap-4 text-brand-paper">
@@ -642,20 +645,20 @@ export default function App() {
                 <form className="space-y-6 relative z-10">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                      <label className="font-mono text-[9px] text-brand-chalk uppercase tracking-widest">Нэр</label>
-                      <input type="text" className="w-full bg-brand-bg/50 border border-hairline rounded-2xl px-6 py-4 focus:outline-none focus:border-brand-teal focus:ring-1 focus:ring-brand-teal/50 transition-all text-white" placeholder="Таны нэр" />
+                      <label className="font-mono text-[9px] text-brand-chalk uppercase tracking-widest">{t('contact.form.name')}</label>
+                      <input type="text" className="w-full bg-brand-bg/50 border border-hairline rounded-2xl px-6 py-4 focus:outline-none focus:border-brand-teal focus:ring-1 focus:ring-brand-teal/50 transition-all text-white" placeholder={t('contact.form.placeholder_name')} />
                     </div>
                     <div className="space-y-2">
-                      <label className="font-mono text-[9px] text-brand-chalk uppercase tracking-widest">И-мэйл</label>
-                      <input type="email" className="w-full bg-brand-bg/50 border border-hairline rounded-2xl px-6 py-4 focus:outline-none focus:border-brand-teal focus:ring-1 focus:ring-brand-teal/50 transition-all text-white" placeholder="email@example.com" />
+                      <label className="font-mono text-[9px] text-brand-chalk uppercase tracking-widest">{t('contact.form.email')}</label>
+                      <input type="email" className="w-full bg-brand-bg/50 border border-hairline rounded-2xl px-6 py-4 focus:outline-none focus:border-brand-teal focus:ring-1 focus:ring-brand-teal/50 transition-all text-white" placeholder={t('contact.form.placeholder_email')} />
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <label className="font-mono text-[9px] text-brand-chalk uppercase tracking-widest">Мессеж</label>
-                    <textarea className="w-full bg-brand-bg/50 border border-hairline rounded-2xl px-6 py-4 focus:outline-none focus:border-brand-teal focus:ring-1 focus:ring-brand-teal/50 transition-all h-32 resize-none text-white" placeholder="Төслийн талаар товч..." />
+                    <label className="font-mono text-[9px] text-brand-chalk uppercase tracking-widest">{t('contact.form.message')}</label>
+                    <textarea className="w-full bg-brand-bg/50 border border-hairline rounded-2xl px-6 py-4 focus:outline-none focus:border-brand-teal focus:ring-1 focus:ring-brand-teal/50 transition-all h-32 resize-none text-white" placeholder={t('contact.form.placeholder_message')} />
                   </div>
                   <button className="w-full py-4 bg-white text-brand-bg rounded-2xl font-mono text-[11px] font-bold flex items-center justify-center gap-3 hover:bg-brand-teal hover:text-white transition-all shadow-[0_0_20px_rgba(255,255,255,0.1)]">
-                    Илгээх <MessageSquare size={18} />
+                    {t('contact.form.submit')} <MessageSquare size={18} />
                   </button>
                 </form>
               </div>
@@ -670,7 +673,7 @@ export default function App() {
           <div className="md:col-span-5">
             <Logo className="mb-8" />
             <p className="text-brand-chalk text-lg max-w-sm mb-10 font-light">
-              Бид Монгол инженерийн ур ухааныг дэлхийн технологийн дэвшилтэй холбож байна.
+              {t('footer.tagline')}
             </p>
             <div className="flex gap-4">
               <a href="#" className="w-10 h-10 rounded-full border border-hairline flex items-center justify-center text-brand-chalk hover:text-brand-teal hover:border-brand-teal transition-all hover:-translate-y-1">
@@ -689,33 +692,33 @@ export default function App() {
           </div>
           <div className="md:col-span-7 grid grid-cols-2 md:grid-cols-3 gap-12">
             <div>
-              <h4 className="font-mono text-[10px] text-white mb-8 tracking-[0.2em]">Бүтээгдэхүүн</h4>
+              <h4 className="font-mono text-[10px] text-white mb-8 tracking-[0.2em]">{t('footer.columns.products')}</h4>
               <ul className="space-y-4">
-                {["Техно-Гар", "AirQ", "Mining AI", "IoT Platform"].map(link => (
+                {(t('footer.product_links', { returnObjects: true }) as string[]).map(link => (
                   <li key={link}><a href="#" className="text-brand-chalk hover:text-brand-teal transition-colors text-sm font-light">{link}</a></li>
                 ))}
               </ul>
             </div>
             <div>
-              <h4 className="font-mono text-[10px] text-white mb-8 tracking-[0.2em]">Компани</h4>
+              <h4 className="font-mono text-[10px] text-white mb-8 tracking-[0.2em]">{t('footer.columns.company')}</h4>
               <ul className="space-y-4">
-                {["Бидний тухай", "Баг", "Карьер", "Блог"].map(link => (
+                {(t('footer.company_links', { returnObjects: true }) as string[]).map(link => (
                   <li key={link}><a href="#" className="text-brand-chalk hover:text-brand-teal transition-colors text-sm font-light">{link}</a></li>
                 ))}
               </ul>
             </div>
             <div className="col-span-2 md:col-span-1">
-              <h4 className="font-mono text-[10px] text-white mb-8 tracking-[0.2em]">Холбоо барих</h4>
-              <p className="text-brand-chalk text-sm font-light mb-4 text-balance">Монгол Улс, Улаанбаатар, Сүхбаатар дүүрэг, 8-р хороо, МТҮП, 112 тоот</p>
+              <h4 className="font-mono text-[10px] text-white mb-8 tracking-[0.2em]">{t('footer.columns.contact')}</h4>
+              <p className="text-brand-chalk text-sm font-light mb-4 text-balance">{t('footer.address')}</p>
               <p className="text-brand-paper text-sm font-medium">info@daccompartners.com</p>
             </div>
           </div>
         </div>
         <div className="max-w-7xl mx-auto mt-20 pt-10 border-t border-hairline flex flex-col md:flex-row justify-between items-center gap-6">
-          <p className="font-mono text-[9px] text-brand-chalk/30">© 2026 DACCOM PARTNERS LLC. ALL RIGHTS RESERVED.</p>
+          <p className="font-mono text-[9px] text-brand-chalk/30">{t('footer.rights')}</p>
           <div className="flex gap-8">
-            <a href="#" className="font-mono text-[9px] text-brand-chalk/30 hover:text-brand-teal transition-colors">Privacy Policy</a>
-            <a href="#" className="font-mono text-[9px] text-brand-chalk/30 hover:text-brand-teal transition-colors">Terms of Service</a>
+            <a href="#" className="font-mono text-[9px] text-brand-chalk/30 hover:text-brand-teal transition-colors">{t('footer.privacy')}</a>
+            <a href="#" className="font-mono text-[9px] text-brand-chalk/30 hover:text-brand-teal transition-colors">{t('footer.terms')}</a>
           </div>
         </div>
       </footer>
@@ -890,6 +893,35 @@ function AirQVisual() {
           className="w-4 bg-brand-accent/40 rounded-full"
         />
       ))}
+    </div>
+  );
+}
+
+function LanguageSwitcher() {
+  const { i18n } = useTranslation();
+
+  return (
+    <div className="flex items-center gap-2 p-1 bg-brand-bg-card/50 backdrop-blur-md border border-hairline rounded-full">
+      <button
+        onClick={() => i18n.changeLanguage('mn')}
+        className={`px-3 py-1.5 rounded-full font-mono text-[9px] uppercase tracking-wider transition-all ${
+          i18n.language === 'mn' 
+            ? 'bg-brand-teal text-brand-bg shadow-[0_0_15px_rgba(6,182,212,0.3)]' 
+            : 'text-brand-chalk hover:text-white'
+        }`}
+      >
+        MN
+      </button>
+      <button
+        onClick={() => i18n.changeLanguage('en')}
+        className={`px-3 py-1.5 rounded-full font-mono text-[9px] uppercase tracking-wider transition-all ${
+          i18n.language === 'en' 
+            ? 'bg-brand-teal text-brand-bg shadow-[0_0_15px_rgba(6,182,212,0.3)]' 
+            : 'text-brand-chalk hover:text-white'
+        }`}
+      >
+        EN
+      </button>
     </div>
   );
 }

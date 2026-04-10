@@ -1,0 +1,177 @@
+{
+  "loading": "Initializing System...",
+  "nav": {
+    "services": "SERVICES",
+    "projects": "PROJECTS",
+    "products": "PRODUCTS",
+    "about": "ABOUT US",
+    "contact": "Contact Us"
+  },
+  "hero": {
+    "tagline": "Deep Tech Innovation 2026",
+    "title_part1": "Automating",
+    "title_part2": "the Future",
+    "description": "Mongolia's premier deep tech platform, unifying Mechatronics, Artificial Intelligence, and Advanced Robotics.",
+    "cta_collaborate": "Collaborate With Us",
+    "cta_projects": "Explore Projects"
+  },
+  "trusted_by": "Trusted by Industry Leaders",
+  "stats": {
+    "projects": "Successful Projects",
+    "engineers": "Expert Engineers",
+    "savings": "Operational Savings",
+    "patents": "Technology Patents"
+  },
+  "tech": {
+    "title": "Core",
+    "title_italic": "Technologies",
+    "description": "We leverage a world-class, cutting-edge technology stack to engineer robust, high-performance systems."
+  },
+  "services": {
+    "badge": "Operations",
+    "title": "Comprehensive Tech",
+    "title_italic_before": "",
+    "title_italic": "Ecosystem",
+    "description": "We deliver integrated solutions that bridge the gap between advanced software, hardware, and AI.",
+    "industrial": {
+      "title": "Industrial Automation",
+      "desc": "Precision mechatronics, robotic arms, and sophisticated PLC control systems."
+    },
+    "vision": {
+      "title": "AI Vision",
+      "desc": "High-fidelity quality control powered by advanced computer vision algorithms."
+    },
+    "iot": {
+      "title": "IoT Systems",
+      "desc": "Real-time data acquisition and comprehensive monitoring infrastructure."
+    },
+    "maintenance": {
+      "title": "Predictive Maintenance",
+      "desc": "AI-driven diagnostics to forecast and prevent system failures."
+    }
+  },
+  "projects": {
+    "badge": "Success Stories",
+    "title": "Our Featured",
+    "title_italic": "Engagements",
+    "description": "From market-leading digital platforms to pioneering deep tech innovations in the industry.",
+    "award": "2025 Innovation Excellence Award",
+    "airq": {
+      "title": "AirQ",
+      "desc": "Intelligent IoT system for real-time air quality monitoring and proactive hazard prevention."
+    },
+    "techno_arm": {
+      "title": "Techno Arm",
+      "desc": "High-precision robotic solution engineered for seamless industrial process automation."
+    },
+    "itrip": "Travel Platform",
+    "ihotel": "Hotel Booking",
+    "xroom": "Property Rental System",
+    "myhotel": "Hotel Management",
+    "mining": {
+      "badge": "Developing",
+      "title": "Predictive AI for Mining",
+      "desc": "AI & IoT-integrated solution designed to predict machinery failure and eliminate downtime in heavy mining operations.",
+      "analyzing": "ANALYZING..."
+    }
+  },
+  "products": {
+    "techno_arm": {
+      "tag": "Robotics",
+      "title": "Techno-Arm",
+      "desc": "Advanced robotic vehicle wash system utilizing 3D scanning for autonomous, high-quality performance.",
+      "metric1": "Wash Cycle Duration",
+      "metric1_val": "8-12 min",
+      "metric2": "Water Conservation",
+      "metric2_val": "70%",
+      "metric3": "Precision Accuracy",
+      "metric3_val": "99.9%"
+    },
+    "airq": {
+      "tag": "IoT & Health",
+      "title": "AirQ",
+      "desc": "Next-gen IoT system for indoor environmental monitoring and automated ventilation control.",
+      "metric1": "Sensors",
+      "metric1_val": "CO2, PM2.5",
+      "metric2": "Connectivity",
+      "metric2_val": "WiFi/LoRa",
+      "metric3": "Productivity",
+      "metric3_val": "+25%"
+    }
+  },
+  "process": {
+    "badge": "Workflow",
+    "title": "Bridging",
+    "title_italic": "Ideas",
+    "title_end": "into Reality",
+    "step1": {
+      "title": "Research & Strategy",
+      "desc": "In-depth analysis of challenges to architect the most effective technological solution."
+    },
+    "step2": {
+      "title": "Prototyping & R&D",
+      "desc": "Rigorous hardware and software testing of the initial solution architecture."
+    },
+    "step3": {
+      "title": "Production & Scaling",
+      "desc": "Full-scale deployment and system integration into live operations."
+    },
+    "speed": {
+      "title": "Rapid Development",
+      "desc": "Leveraging Agile methodologies <br /> to deliver high-impact results with velocity."
+    }
+  },
+  "team": {
+    "title": "Leadership",
+    "title_italic": "Team",
+    "description": "A synergy of Ph.D. scholars, industry veterans, and strategic visionaries.",
+    "member1": {
+      "name": "Dr. R. Amartuvshin",
+      "role": "CTO · Ph.D.",
+      "bio": "Holds a Ph.D. in Mechatronics and Robotics from Japan. An Associate Professor at the National University of Mongolia, he is a leading scientist contributing to the development of robotics in Mongolia."
+    },
+    "member2": {
+      "name": "S. Erdenebat",
+      "role": "CEO",
+      "bio": "Founder of Startup Mongolia NGO and a technology entrepreneur. An expert contributing significantly to strategy, investment, and the development of the startup ecosystem."
+    },
+    "member3": {
+      "name": "Ts. Munkhtsogt",
+      "role": "CPO",
+      "bio": "Founder of UBCab and Mongol Computing LLC. A computer engineer with over 10 years of experience in the technology sector and extensive expertise in product development."
+    }
+  },
+  "quote": {
+    "text": "Technology is more than a tool; it is the most powerful engine defining the future of Mongolian industry.",
+    "author": "— Daccom Partners"
+  },
+  "contact": {
+    "title": "Ready to",
+    "title_italic": "Pioneer",
+    "title_end": "Your Next Project?",
+    "description": "We engineer bespoke technological solutions to elevate your business's competitive edge for the future.",
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "message": "Message",
+      "placeholder_name": "Your Name",
+      "placeholder_email": "email@example.com",
+      "placeholder_message": "Tell us about your project...",
+      "submit": "Submit"
+    }
+  },
+  "footer": {
+    "tagline": "Uniting Mongolian engineering excellence with global technological advancement.",
+    "columns": {
+      "products": "Products",
+      "company": "Company",
+      "contact": "Contact"
+    },
+    "product_links": ["Techno-Arm", "AirQ", "Mining AI", "IoT Platform"],
+    "company_links": ["About Us", "Team", "Careers", "Blog"],
+    "address": "Office 112, IT Park, 8th Khoroo, Sukhbaatar District, Ulaanbaatar, Mongolia",
+    "rights": "© 2026 DACCOM PARTNERS LLC. ALL RIGHTS RESERVED.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service"
+  }
+}
